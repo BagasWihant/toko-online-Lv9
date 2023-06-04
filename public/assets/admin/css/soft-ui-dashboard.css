@@ -3109,6 +3109,12 @@ textarea.form-control-lg {
   clip: rect(0, 0, 0, 0);
   pointer-events: none;
 }
+.btn-inner--icon {
+    font-size: 15px;
+}
+.btn-inner--icon-lg {
+    font-size: 20px;
+}
 
 .btn-check[disabled]+.btn,
 .btn-check:disabled+.btn {

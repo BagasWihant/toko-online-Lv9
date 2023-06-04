@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // admin
 Route::prefix('/admin')->middleware(['auth','isAdmin'])->group( function(){
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
-    Route::get('category', [App\Http\Controllers\Admin\CategoryController::class, 'index']);
-    Route::post('category', [App\Http\Controllers\Admin\CategoryController::class, 'storeAdd']);
+
+    Route::controller(CategoryController::class)->group(function(){
+        Route::get('category', 'index');
+        Route::post('category',  'storeAdd');
+        Route::get('category/{id}/edit', 'getDetail');
+        Route::put('category/{data}/edit', 'edit');
+        Route::get('category/{id}/showHide', 'update');
+    });
 });

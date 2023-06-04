@@ -6,19 +6,50 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
     //
 
-    public function index()
-    {
+    public function index(){
         $data = array('title' => 'Category');
         return view('admin.category.main', $data);
     }
-    public function storeAdd(CategoryRequest $request)
-    {
+
+    public function getDetail(Category $id){
+        return $id;
+    }
+    public function edit(CategoryRequest $request, $data){
+        $validatedData = $request->validated();
+
+        $category = Category::findOrFail($data);
+
+        $category->name = $validatedData['name'];
+        $category->slug = Str::slug($validatedData['slug']);
+        $category->description = $validatedData['description'];
+        $category->meta_title = $validatedData['meta_title'];
+        $category->meta_keyword = $validatedData['meta_keyword'];
+        $category->meta_description = $validatedData['meta_description'];
+
+        if($request->hasFile('image')){
+            $path = 'upload/category/'. $category->image;
+            if(File::exists($path)){
+                File::delete($path);
+            }
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = time().'.'.$ext;
+
+            $file->move('upload/category/',$fileName);
+            $category->image = $fileName;
+        }
+        $category->update();
+        return json_encode(['success'=>true,'pesan'=>'Berhasil Update Data']);
+    }
+
+    public function storeAdd(CategoryRequest $request){
         $validatedData = $request->validated();
 
         $category = new Category;
