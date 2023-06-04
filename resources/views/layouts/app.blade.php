@@ -20,8 +20,8 @@
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
-    {{-- <script src="{{ asset('assets/admin/js/jquery-3.7.0.min.js.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/jquery-3.7.0.min.js.js') }}"></script>
+    {{-- <script src="{{ asset('assets/admin/js/bootstrap.bundle.min.js.js') }}"></script> --}}
 </head>
 <body>
     <div id="app">
