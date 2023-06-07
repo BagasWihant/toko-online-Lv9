@@ -16,19 +16,11 @@ class Index extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $category_id;
-    public $name;
-    public $slug;
-    public $status;
-    public $description;
-    public $image;
-    public $meta_title;
-    public $meta_keyword;
-    public $iteration =0;
-    public $meta_description;
+    public $category_id, $name, $slug, $status, $description, $image, $oldImage, $meta_title, $meta_keyword, $meta_description, $kondisi, $category;
+    public $iteration =0; // untuk id upload ben bar upload ke reset
 
     protected $rules = [
-        'name' => 'required|min:3|string',
+        'name' => 'required|min:3|string|unique:categories',
         'slug' => 'required|string',
         'description' => 'required|string',
         'meta_title' => 'required|string',
@@ -43,13 +35,30 @@ class Index extends Component
     public function clearForm()
     {
         $this->image = null;
+        $this->oldImage = null;
         $this->name = '';
         $this->slug = '';
         $this->description = '';
         $this->meta_description = '';
         $this->meta_keyword = '';
         $this->meta_title = '';
+        $this->kondisi = '';
     }
+
+    public function getID($id){
+        $this->category = Category::where('id',$id)->first();
+
+        $this->kondisi = 'update';
+        $this->category_id = $this->category->id;
+        $this->name = $this->category->name;
+        $this->slug = $this->category->slug;
+        $this->description = $this->category->description;
+        $this->oldImage = $this->category->image;
+        $this->meta_title = $this->category->meta_title;
+        $this->meta_keyword = $this->category->meta_keyword;
+        $this->meta_description = $this->category->meta_description;
+    }
+
     public function tambahKategori(){
 
         $this->validate();
@@ -73,49 +82,53 @@ class Index extends Component
         $this->image = null;
         $this->iteration++;
         $this->clearForm();
-        // $this->dispatchBrowserEvent('name-updated');
         $this->dispatchBrowserEvent('tambahKategori');
     }
 
-    public function getID($id){
-        $category = Category::where('id',$id)->first();
+    public function hapusKategori(){
 
-        $this->category_id = $category->id;
-        $this->name = $category->name;
-        $this->slug = $category->slug;
-        $this->description = $category->description;
-        $this->image = $category->image;
-        $this->meta_title = $category->meta_title;
-        $this->meta_keyword = $category->meta_keyword;
-        $this->meta_description = $category->meta_description;
+        $this->category->delete();
+        $this->clearForm();
+        $this->dispatchBrowserEvent('hapusKategori');
 
     }
 
-    public function formUpdateKategori(){
+
+    public function updateKategori(){
         $this->validate();
 
-        $category = Category::find($this->category_id);
+        // $category = Category::find($this->category_id);
 
-        $category->name = $this->name;
-        $category->slug = Str::slug($this->slug);
-        $category->description = $this->description;
-        $category->meta_title = $this->meta_title;
-        $category->meta_keyword = $this->meta_keyword;
-        $category->meta_description = $this->meta_description;
+        $this->category->name = $this->name;
+        $this->category->slug = Str::slug($this->slug);
+        $this->category->description = $this->description;
+        $this->category->meta_title = $this->meta_title;
+        $this->category->meta_keyword = $this->meta_keyword;
+        $this->category->meta_description = $this->meta_description;
 
-        if($request->hasFile('image')){
-            $path = 'upload/category/'. $category->image;
-            if(File::exists($path)){
-                File::delete($path);
-            }
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $fileName = time().'.'.$ext;
-
-            $file->move('upload/category/',$fileName);
-            $category->image = $fileName;
+        if($this->image != null){
+            $this->validate([
+                'image' => 'image|max:7017',
+            ]);
+            $image = $this->image->store('public/upload/category/'); //path => storage/app/public
+            $this->category->image = $image;
         }
-        $category->update();
+        $this->category->update();
+        $this->clearForm();
+
+        $this->dispatchBrowserEvent('updateKategori');
+
+    }
+
+    public function hide($id){
+        $this->getID($id);
+        $this->category->status = '0';
+        $this->category->update();
+    }
+    public function show($id){
+        $this->getID($id);
+        $this->category->status = '1';
+        $this->category->update();
     }
 
     public function render()
