@@ -8,7 +8,7 @@
 </p>
 
 ## TOKO ONLINE WIHANT AMATIR🤣
-!penting
+! penting
 artisan storage:link _wajib
 
 ### fitur-fitur
