@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProdukController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,14 +25,19 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // admin
-Route::prefix('/admin')->middleware(['auth','isAdmin'])->group( function(){
+Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
 
-    Route::controller(CategoryController::class)->group(function(){
+    Route::controller(CategoryController::class)->group(function () {
         Route::get('category', 'index');
-        Route::post('category',  'storeAdd');
-        Route::get('category/{id}/edit', 'getDetail');
-        Route::put('category/{data}/edit', 'edit');
-        Route::get('category/{id}/showHide', 'update');
+        // Route::post('category',  'storeAdd');
+        // Route::get('category/{id}/edit', 'getDetail');
+        // Route::put('category/{data}/edit', 'edit');
+        // Route::get('category/{id}/showHide', 'update');
+    });
+    Route::controller(ProdukController::class)->group(function () {
+        Route::get('product', 'index');
+        // Route::get('product/{id}/edit', 'edit')->name('editProduk');
+
     });
 });

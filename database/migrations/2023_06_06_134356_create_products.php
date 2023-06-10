@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('harga_asli',11);
             $table->string('harga_jual',11);
             $table->integer('jumlah');
-            $table->tinyInteger('trending')->default('0')->comment('0=>not, 1:trending');
+            $table->tinyInteger('trending')->default('1')->comment('0=>not, 1:trending');
             $table->tinyInteger('status')->default('1')->comment('0=>hide, 1:visible');
 
             $table->string('meta_title')->nullable();

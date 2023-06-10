@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link  active" href="./dashboard">
+                    <a class="nav-link   {{ request()->segment(2) =='dashboard' ? 'active' : '' }}" href="{{ url('admin/dashboard') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="./category">
+                    <a class="nav-link {{ request()->segment(2) =='category' ? 'active' : '' }} " href="{{ url('admin/category') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -88,11 +88,11 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Category</span>
+                        <span class="nav-link-text ms-1">Category </span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="./product">
+                    <a class="nav-link {{ request()->segment(2) =='product' ? 'active' : '' }} " href="{{ url('admin/product') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"

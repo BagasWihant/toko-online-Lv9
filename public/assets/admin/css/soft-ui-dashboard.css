@@ -26702,3 +26702,37 @@ pre[class*="language-"] {
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
+/* BAGAS WHANTORO */
+.img-cover-150{
+    width: 150px;height: 150px;object-fit: cover;
+}
+.img-cover-200{
+    width: 200px;height: 200px;object-fit: cover;
+}
+.img-cover-100{
+    width: 100px;height: 100px;object-fit: cover;
+}
+
+.loader {
+    -webkit-animation: spinner 1.5s linear infinite;
+    animation: spinner 1.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -16,7 +16,7 @@ class Index extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $category_id, $name, $slug, $status, $description, $image, $oldImage, $meta_title, $meta_keyword, $meta_description, $kondisi, $category;
+    public $category_id, $name, $slug, $status = 1, $description, $image, $oldImage, $meta_title, $meta_keyword, $meta_description, $kondisi, $category;
     public $iteration =0; // untuk id upload ben bar upload ke reset
 
     protected $rules = [
@@ -95,7 +95,14 @@ class Index extends Component
 
 
     public function updateKategori(){
-        $this->validate();
+        $this->validate([
+            'name' => 'required|min:3|string|',
+            'slug' => 'required|string',
+            'description' => 'required|string',
+            'meta_title' => 'required|string',
+            'meta_keyword' => 'required|string',
+            'meta_description' => 'required|string',
+        ]);
 
         // $category = Category::find($this->category_id);
 

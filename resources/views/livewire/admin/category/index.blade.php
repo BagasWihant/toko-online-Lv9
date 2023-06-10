@@ -6,14 +6,13 @@
             <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
             <span class="btn-inner--text">Tambah Kategori</span>
         </button>
-
         <!-- Modal tambah kategori-->
-        <div wire:ignore.self class="modal fade" id="tambahKategori" tabindex="-1" role="dialog"
+        <div wire:ignore.self class="modal fade" id="tambahKategori" tabindex="-1" role="dialog"  data-bs-backdrop="static" data-bs-keyboard="false"
             aria-labelledby="tambahKategori" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close" wire:click="clearForm">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -66,7 +65,7 @@
                                         @enderror
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
 
                                             <label>Image</label>
                                             <div class="input-group">
@@ -80,7 +79,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-6 align-self-center">
+                                        <div class="col-md-4 align-self-center">
                                             <div class="text-center">
                                                 @if ($image != null)
                                                     <img src="{{ $image->temporaryUrl() }}" alt="previewADD"
@@ -152,7 +151,7 @@
         </div>
 
         <!-- Modal UPDATE kategori-->
-        <div wire:ignore.self class="modal fade" id="updateKategori" tabindex="-1" role="dialog"
+        <div wire:ignore.self class="modal fade" id="updateKategori" tabindex="-1" role="dialog"  data-bs-backdrop="static" data-bs-keyboard="false"
             aria-labelledby="updateKategori" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
@@ -165,7 +164,7 @@
                     <div class="modal-body p-0">
                         <div class="card card-plain">
                             <div class="card-header pb-0 text-left">
-                                <h5 class="font-weight-bolder text-center text-info text-gradient">Update Kategori</h5>
+                                <h5 class="font-weight-bolder text-center text-warning text-gradient">Update Kategori</h5>
                             </div>
                             <div class="card-body">
                                 <form role="form text-left" wire:submit.prevent="updateKategori"
@@ -279,7 +278,7 @@
                                     </div>
                                     <div class="text-center">
                                         <button type="submit"
-                                            class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Tambah</button>
+                                            class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Update</button>
 
                                     </div>
                                 </form>
@@ -298,7 +297,7 @@
         </div>
 
         <!-- Modal Hapus kategori-->
-        <div wire:ignore.self class="modal fade" id="hapusKategori" tabindex="-1" role="dialog"
+        <div wire:ignore.self class="modal fade" id="hapusKategori" tabindex="-1" role="dialog"  data-bs-backdrop="static" data-bs-keyboard="false"
             aria-labelledby="hapusKategori" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
@@ -343,7 +342,7 @@
         </div>
 
         <!-- Modal image -->
-        <div class="modal fade" id="previewImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade" id="previewImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="previewImageLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
