@@ -14,11 +14,12 @@
     <link href="{{ asset('assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
     <link id="pagestyle" href="{{ asset('assets/admin/css/soft-ui-dashboard.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js.js') }}"></script>
     <!-- Font Awesome Icons -->
     <script src="{{ asset('assets/admin/js/fontawesomekit.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js" integrity="sha256-2Dbg51yxfa7qZ8CSKqsNxHtph8UHdgbzxXF9ANtyJHo=" crossorigin="anonymous"></script>
     @livewireStyles
 </head>
 
@@ -119,7 +120,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="../pages/virtual-reality.html">
+                    <a class="nav-link {{ request()->segment(2) =='slider' ? 'active' : '' }} " href="{{ url('admin/slider') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -145,7 +146,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Virtual Reality</span>
+                        <span class="nav-link-text ms-1">Slider</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -396,7 +397,19 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+        })
+    </script>
     <script src="{{ asset('assets/admin/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/plugins/perfect-scrollbar.min.js') }}"></script>

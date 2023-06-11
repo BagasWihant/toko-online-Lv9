@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ProdukWarna;
 use Illuminate\Database\Eloquent\Model;
 
 class GambarProduk extends Model
@@ -12,5 +13,4 @@ class GambarProduk extends Model
     protected $fillable = [
         'produk_id','gambar'
     ];
-
 }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Produk;
 use App\Models\Category;
 use App\Models\GambarProduk;
 use App\Models\Product;
+use App\Models\ProdukWarna;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -17,25 +18,29 @@ class Index extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $produk_id, $name, $brand, $slug, $status, $deskripsi, $image = [], $oldImage = null, $kategori_id, $editmode = false,
-        $meta_title, $meta_keyword, $meta_deskripsi, $kondisiModal = 'tambah', $produk, $trending, $harga_asli, $harga_jual, $jumlah, $update;
-    public $iteration = 0; // untuk id upload ben bar upload ke reset
+    public $errorValidasi = '',$produk_id, $name, $brand, $slug, $status, $deskripsi, $image = [], $oldImage = null, $kategori_id,
+        $meta_title, $meta_keyword, $meta_deskripsi, $kondisiModal = 'tambah', $produk, $trending, $harga_asli, $harga_jual, $jumlah, $warna = [];
+    public $iteration = 0, $totalWarna = 1, $color, $qty; // untuk id upload ben bar upload ke reset
+
+    // image
+    public $productWarna;
+
+    
+
 
     protected $listeners = ['terhapus' => '$refresh'];
     protected $rules = [
         'name' => 'required|min:3|string|unique:categories',
         'slug' => 'required|string',
         'deskripsi' => 'required|string',
-        'meta_title' => 'required|string',
-        'meta_keyword' => 'required|string',
-        'meta_deskripsi' => 'required|string',
-        'harga_jual' => 'required',
-        'harga_asli' => 'required',
+        'harga_jual' => 'required|integer',
+        'harga_asli' => 'required|integer',
         'image' => 'nullable',
     ];
     public function clear()
     {
-        $this->iteration++;
+        $this->iteration = 0;
+        $this->errorValidasi = '';
         $this->produk_id = '';
         $this->name = '';
         $this->brand = '';
@@ -54,7 +59,10 @@ class Index extends Component
         $this->harga_jual = '';
         $this->jumlah = '';
         $this->kondisiModal = 'tambah';
-        $this->editmode = false;
+        $this->warna = [];
+        $this->productWarna = null;
+        $this->color = [];
+        $this->qty = [];
     }
 
     public function hapusGambar($id)
@@ -87,12 +95,29 @@ class Index extends Component
         $this->jumlah = $this->produk->jumlah;
         $img = $this->produk->productImage;
         $this->oldImage = $img;
-        // dd($this->brand);
+        $productWarna = $this->produk->productWarna;
+        $this->productWarna = $productWarna;
+        foreach ($productWarna as $k => $v) {
+            $this->qty[$k] = $v->qty;
+            $this->color[$k] = $v->warna;
+        }
     }
 
     public function tambahProduk()
     {
-        $this->validate();
+
+        $jumlahTotal = 0;
+        if ($this->color) {
+
+            foreach ($this->color as $k => $v) {
+                $jumlahTotal = $jumlahTotal + $this->qty[$k];
+            }
+        }
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorValidasi = $e->getMessage();
+        }
         $category = Category::findOrFail($this->kategori_id);
         $product = $category->product()->create([
             'name' => $this->name,
@@ -101,14 +126,24 @@ class Index extends Component
             'deskripsi' => $this->deskripsi,
             'harga_asli' => $this->harga_asli,
             'harga_jual' => $this->harga_jual,
-            'jumlah' => $this->jumlah,
+            'jumlah' => $jumlahTotal,
             'meta_title' => $this->meta_title,
             'meta_keyword' => $this->meta_keyword,
             'meta_deskripsi' => $this->meta_deskripsi,
             'trending' => $this->trending ? '1' : '0',
             'status' => $this->status ? '1' : '0',
         ]);
-
+        // INSERT WARNA
+        $jumlahTotal = 0;
+        foreach ($this->color as $k => $v) {
+            $product->productWarna()->create([
+                'produk_id' => $product->id,
+                'warna' => $this->color[$k],
+                'qty' => $this->qty[$k],
+            ]);
+            $jumlahTotal = $jumlahTotal + $this->qty[$k];
+        }
+        // INSERT GAMBAR
         if ($this->image != null) {
             $this->validate([
                 'image.*' => 'image|max:7017',
@@ -122,6 +157,7 @@ class Index extends Component
                 ]);
             }
         }
+
         $this->iteration++;
         $this->clear();
         $this->dispatchBrowserEvent('modalhide');
@@ -146,25 +182,38 @@ class Index extends Component
 
     public function updateProduk()
     {
-        $this->validate([
-            'name' => 'required|min:3|string',
-            'slug' => 'required|string',
-            'deskripsi' => 'required|string',
-            'meta_title' => 'required|string',
-            'meta_keyword' => 'required|string',
-            'meta_deskripsi' => 'required|string',
-            'harga_jual' => 'required',
-            'harga_asli' => 'required',
-            'image' => 'nullable',
-        ]);
-        // dd($this->produk->name);
+        try {
+            //code...
+            $this->validate([
+                'name' => 'required|min:3|string',
+                'slug' => 'required|string',
+                'deskripsi' => 'required|string',
+                'harga_jual' => 'required|integer',
+                'harga_asli' => 'required|integer',
+                'image' => 'nullable',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorValidasi = $e->getMessage();
+        }
+        $warna = ProdukWarna::where('produk_id', $this->produk_id);
+        $warna->delete();
+        $jumlahTotal = 0;
+        $produk = Product::where('id', $this->produk_id)->first();
+        foreach ($this->color as $k => $v) {
+            $produk->productWarna()->create([
+                'produk_id' => $this->produk_id,
+                'warna' => $this->color[$k],
+                'qty' => $this->qty[$k],
+            ]);
+            $jumlahTotal = $jumlahTotal + $this->qty[$k];
+        }
         $this->produk->name = $this->name;
         $this->produk->brand = $this->brand;
         $this->produk->slug = $this->slug;
         $this->produk->deskripsi = $this->deskripsi;
         $this->produk->harga_asli = $this->harga_asli;
         $this->produk->harga_jual = $this->harga_jual;
-        $this->produk->jumlah = $this->jumlah;
+        $this->produk->jumlah = $jumlahTotal;
         $this->produk->meta_title = $this->meta_title;
         $this->produk->meta_keyword = $this->meta_keyword;
         $this->produk->meta_deskripsi = $this->meta_deskripsi;
@@ -184,6 +233,7 @@ class Index extends Component
                 ]);
             }
         }
+
         $this->iteration++;
         $this->clear();
         $this->dispatchBrowserEvent('modalhide');
@@ -193,7 +243,6 @@ class Index extends Component
     public function show($id)
     {
         $this->getID($id);
-        sleep(3);
         $this->produk->status = '1';
         $this->produk->update();
         $this->clear();
@@ -201,10 +250,19 @@ class Index extends Component
     public function hide($id)
     {
         $this->getID($id);
-        sleep(3);
         $this->produk->status = '0';
         $this->produk->update();
         $this->clear();
+    }
+
+    public function tambahWarna($totalWarna)
+    {
+        $totalWarna = $totalWarna + 1;
+        $this->totalWarna = $totalWarna;
+
+        array_push($this->warna, $totalWarna);
+        // dd($this->warna);
+
     }
 
     public function render()

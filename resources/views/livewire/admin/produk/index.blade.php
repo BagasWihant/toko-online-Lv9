@@ -34,8 +34,19 @@
                                         wire:submit.prevent="tambahProduk">
                                     @else
                                         <form role="form text-left" enctype="multipart/form-data"
-                                        wire:submit.prevent="updateProduk">
+                                            wire:submit.prevent="updateProduk">
                                 @endif
+                                @if ($errorValidasi)
+                                <div class="alert alert-danger alert-dismissible fade show text-white" role="alert">
+                                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                    <span class="alert-text"><strong>Danger!</strong> {{$errorValidasi}}</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                @endif
+                                
+                                
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <button class="nav-link active" id="nav-data-tab" data-bs-toggle="tab"
@@ -45,6 +56,9 @@
                                         <button class="nav-link" id="nav-gambar-tab" data-bs-toggle="tab"
                                             wire:ignore.self data-bs-target="#nav-gambar" type="button" role="tab"
                                             aria-controls="nav-gambar" aria-selected="false">Gambar</button>
+                                        <button class="nav-link" id="nav-warna-tab" data-bs-toggle="tab"
+                                            wire:ignore.self data-bs-target="#nav-warna" type="button" role="tab"
+                                            aria-controls="nav-warna" aria-selected="false">Warna</button>
                                     </div>
                                 </nav>
 
@@ -77,10 +91,6 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                @error('name')
-                                                    <span class="text-danger"
-                                                        style="font-size:0.7rem !important;">{{ $message }}</span>
-                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row">
@@ -152,19 +162,6 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
-                                                <label>Jumlah Barang</label>
-                                                <div class="input-group">
-                                                    <input type="text"
-                                                        class="form-control @error('harga_asli') is-invalid @enderror"
-                                                        wire:model="jumlah" placeholder="Jumlah Barang"
-                                                        aria-label="Jumlah Barang" name="jumlah">
-                                                </div>
-                                                @error('jumlah')
-                                                    <span class="text-danger"
-                                                        style="font-size:0.7rem !important;">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-3">
                                                 <label class="form-check-label" for="status">Tampilkan
                                                     Produk</label>
                                                 <div class="form-check form-switch">
@@ -172,7 +169,7 @@
                                                         name="status" checked="" wire:model="status">
                                                 </div>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-6">
                                                 <label class="form-check-label" for="status">Trending
                                                     Produk</label>
                                                 <div class="form-check form-switch">
@@ -234,8 +231,9 @@
                                                 <span class="text-danger"
                                                     style="font-size:0.7rem !important;">{{ $message }}</span>
                                             @enderror
-                                            <div wire:loading>
-                                                <span class="text-info text-md text-gradient">Uploading <i class="fas fa-spinner fa-spin"></i></span>
+                                            <div wire:loading wire:target='image'>
+                                                <span class="text-info text-md text-gradient">Uploading <i
+                                                        class="fas fa-spinner fa-spin"></i></span>
                                             </div>
                                         </div>
                                         @if ($kondisiModal == 'tambah')
@@ -295,14 +293,70 @@
 
                                         @endif
                                     </div>
+                                    <div wire:ignore.self class="tab-pane fade text-center" id="nav-warna"
+                                        role="tabpanel" aria-labelledby="nav-warna-tab">
+                                        @if($productWarna)
+                                        @foreach ($productWarna as $index=>$value)
+                                            <div class="row">
+                                                <div class="col-7">
+                                                    <label>WARNA</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" wire:model="color.{{ $index }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <label for="">JUMLAH</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" required
+                                                            wire:model="qty.{{ $index }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        @endif
+                                        @foreach ($warna as $key => $value)
+                                            <div class="row">
+                                                <div class="col-7">
+                                                    <label>WARNA</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" required
+                                                            wire:model="color.{{ $value }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <label for="">JUMLAH</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" required
+                                                            wire:model="qty.{{ $value }}">
+
+                                                        @error('qty.{{ $value }}')
+                                                            <span class="text-danger"
+                                                                style="font-size:0.7rem !important;">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <button class="btn bg-gradient-warning btn-circle-md" type="button"
+                                            wire:click="tambahWarna({{ $totalWarna }})"><i
+                                                class="fas fa-plus-circle"></i></button>
+
+
+                                    </div>
                                 </div>
                                 <div class="text-center">
                                     @if ($kondisiModal == 'tambah')
-                                        <button type="submit" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0"
-                                            wire:submit.prevent="tambahProduk">Tambah</button>
+                                        <button type="submit"
+                                            class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0"
+                                            wire:submit.prevent="tambahProduk">Tambah
+                                            <i wire:loading wire:target='tambahProduk' class="fas fa-spinner fa-spin"></i>
+                                        </button>
                                     @else
                                         <button type="submit" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0"
-                                            wire:prevent="updateProduk">Update</button>
+                                            wire:prevent="updateProduk">
+                                            Update
+                                            <i wire:loading wire:target='updateProduk' class="fas fa-spinner fa-spin"></i>
+                                        </button>
                                     @endif
 
                                 </div>
@@ -314,8 +368,8 @@
             </div>
         </div>
 
-        <div wire:ignore.self class="modal fade" id="hapusKategori" tabindex="-1" role="dialog"  data-bs-backdrop="static" data-bs-keyboard="false"
-            aria-labelledby="hapusKategori" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="hapusKategori" tabindex="-1" role="dialog"
+            data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="hapusKategori" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-body p-0">
@@ -331,7 +385,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="text-center">
-                                                <button type="button" data-bs-dismiss="modal" aria-label="Close" wire:click="clearForm"
+                                                <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                                                    wire:click="clearForm"
                                                     class="btn btn-round bg-gradient-secondary btn-lg w-100 mt-4 mb-0">Batal</button>
                                             </div>
                                         </div>
@@ -381,7 +436,9 @@
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Harga</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jumlah</th>
                         {{-- <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Gambar</th> --}}
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2 text-center">AKsi</th>
+                        <th
+                            class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2 text-center">
+                            AKsi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -397,7 +454,7 @@
                             <td>
                                 <div class="px-2">
                                     <div class="my-auto">
-                                        <h6 class="mb-0 text-sm">{{ $d->kategori_id }}</h6>
+                                        <h6 class="mb-0 text-sm">{{ $d->category->name }}</h6>
                                     </div>
                                 </div>
                             </td>
@@ -429,12 +486,16 @@
                                 @if ($d->status == '1')
                                     <button wire:click="hide({{ $d->id }})"
                                         class="btn btn-link text-success text-gradient" type="button">
-                                        <span  class="btn-inner--icon"><i class="fas fa-eye me-2"></i>tampilkan<i wire:target="hide({{ $d->id }})" wire:loading class="fas fa-spinner fa-spin"></i></span>
+                                        <span class="btn-inner--icon"><i class="fas fa-eye me-2"></i>tampilkan<i
+                                                wire:target="hide({{ $d->id }})" wire:loading
+                                                class="fas fa-spinner fa-spin"></i></span>
                                     </button>
-                                    @else
+                                @else
                                     <button wire:click="show({{ $d->id }})"
                                         class="btn btn-link text-primary text-gradient" type="button">
-                                        <span  class="btn-inner--icon"><i class="fas fa-eye-slash"></i>sembunyikan<i wire:target="show({{ $d->id }})" wire:loading class="fas fa-spinner fa-spin"></i></span>
+                                        <span class="btn-inner--icon"><i class="fas fa-eye-slash"></i>sembunyikan<i
+                                                wire:target="show({{ $d->id }})" wire:loading
+                                                class="fas fa-spinner fa-spin"></i></span>
                                     </button>
                                 @endif
                             </td>
