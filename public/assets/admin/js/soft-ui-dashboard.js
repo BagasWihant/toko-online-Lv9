@@ -220,6 +220,7 @@ function getEventTarget(e) {
 function sidebarColor(a) {
   var parent = a.parentElement.children;
   var color = a.getAttribute("data-color");
+  localStorage.setItem('data-color',color);
 
   for (var i = 0; i < parent.length; i++) {
     parent[i].classList.remove('active');
@@ -232,6 +233,7 @@ function sidebarColor(a) {
   }
 
   var sidebar = document.querySelector('.sidenav');
+  color = localStorage.getItem('data-color')
   sidebar.setAttribute("data-color", color);
 
   if (document.querySelector('#sidenavCard')) {
@@ -355,13 +357,16 @@ function debounce(func, wait, immediate) {
 function sidebarType(a) {
   var parent = a.parentElement.children;
   var color = a.getAttribute("data-class");
-
+  
   var colors = [];
-
+  
   for (var i = 0; i < parent.length; i++) {
     parent[i].classList.remove('active');
     colors.push(parent[i].getAttribute('data-class'));
   }
+  localStorage.setItem('data-class',color);
+  localStorage.setItem('data-clases',colors);
+
 
   if (!a.classList.contains('active')) {
     a.classList.add('active');

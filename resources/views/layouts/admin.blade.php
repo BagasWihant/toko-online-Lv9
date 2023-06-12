@@ -36,7 +36,7 @@
             </a>
         </div>
         <hr class="horizontal dark mt-0">
-        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main" style="  height: calc(100vh - 130px);">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link   {{ request()->segment(2) =='dashboard' ? 'active' : '' }}" href="{{ url('admin/dashboard') }}">
@@ -277,7 +277,7 @@
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky" id="navbarBlur"
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
@@ -341,8 +341,7 @@
         <div class="card shadow-lg ">
             <div class="card-header pb-0 pt-3 ">
                 <div class="float-start">
-                    <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-                    <p>See our dashboard options.</p>
+                    <h5 class="mt-3 mb-0">Theme Configurator</h5>
                 </div>
                 <div class="float-end mt-4">
                     <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
@@ -409,6 +408,22 @@
             timer: 1500,
             timerProgressBar: true
         })
+        $(function () {
+            
+            color = localStorage.getItem('data-color');
+            var sidebar = document.querySelector('.sidenav');
+            sidebar.setAttribute("data-color", color);
+            
+            
+            clas = localStorage.getItem('data-class');
+            clases = localStorage.getItem('data-clases');
+            clases = clases.split(",");
+            for (var i = 0; i < clases.length; i++) {
+            sidebar.classList.remove(clases[i]);
+            }
+
+            sidebar.classList.add(clas);
+        })
     </script>
     <script src="{{ asset('assets/admin/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/core/bootstrap.min.js') }}"></script>
@@ -419,7 +434,7 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{ asset('assets/admin/js/soft-ui-dashboard.min.js?v=1.0.7') }}"></script>
+    <script src="{{ asset('assets/admin/js/soft-ui-dashboard.js') }}"></script>
     @livewireScripts
 </body>
 
