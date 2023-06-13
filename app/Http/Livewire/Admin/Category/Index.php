@@ -35,6 +35,7 @@ class Index extends Component
     public function clearForm()
     {
         $this->image = null;
+        $this->iteration++;
         $this->oldImage = null;
         $this->name = '';
         $this->slug = '';
@@ -69,7 +70,7 @@ class Index extends Component
         $category->meta_title = $this->meta_title;
         $category->meta_keyword = $this->meta_keyword;
         $category->meta_description = $this->meta_description;
-        $category->status = $this->status == 'on' ? '1' : '0';
+        $category->status = $this->status == true ? '1' : '0';
 
         if($this->image != null){
             $this->validate([
@@ -79,7 +80,6 @@ class Index extends Component
             $category->image = $image;
         }
         $category->save();
-        $this->image = null;
         $this->iteration++;
         $this->clearForm();
         $this->dispatchBrowserEvent('tambahKategori');
@@ -120,7 +120,9 @@ class Index extends Component
             $image = $this->image->store('public/upload/category/'); //path => storage/app/public
             $this->category->image = $image;
         }
+        
         $this->category->update();
+        $this->iteration++;
         $this->clearForm();
 
         $this->dispatchBrowserEvent('updateKategori');

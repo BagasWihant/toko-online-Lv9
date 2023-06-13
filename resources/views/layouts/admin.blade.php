@@ -14,13 +14,12 @@
     <link href="{{ asset('assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+    <link id="pagestyle" href="{{ asset('assets/admin/css/bagas.css') }}" rel="stylesheet">
     <link id="pagestyle" href="{{ asset('assets/admin/css/soft-ui-dashboard.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js.js') }}"></script>
     <!-- Font Awesome Icons -->
     <script src="{{ asset('assets/admin/js/fontawesomekit.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js" integrity="sha256-2Dbg51yxfa7qZ8CSKqsNxHtph8UHdgbzxXF9ANtyJHo=" crossorigin="anonymous"></script>
-    @livewireStyles
+     @livewireStyles
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -288,9 +287,9 @@
                     </ol>
                     <h6 class="font-weight-bolder mb-0">{{ $title }}</h6>
                 </nav>
-                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4  justify-content-end" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <ul class="navbar-nav  justify-content-end">
+                        <ul class="navbar-nav ">
                             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                                 <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                                     <div class="sidenav-toggler-inner">
@@ -298,11 +297,6 @@
                                         <i class="sidenav-toggler-line"></i>
                                         <i class="sidenav-toggler-line"></i>
                                     </div>
-                                </a>
-                            </li>
-                            <li class="nav-item px-3 d-flex align-items-center">
-                                <a href="javascript:;" class="nav-link text-body p-0">
-                                    <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                                 </a>
                             </li>
                         </ul>
@@ -397,17 +391,6 @@
     </div>
     <!--   Core JS Files   -->
     <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            iconColor: 'white',
-            customClass: {
-                popup: 'colored-toast'
-            },
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true
-        })
         $(function () {
             
             color = localStorage.getItem('data-color');
@@ -432,10 +415,12 @@
     <script src="{{ asset('assets/admin/js/plugins/chartjs.min.js') }}"></script>
 
     <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets/admin/js/soft-ui-dashboard.js') }}"></script>
     @livewireScripts
+    <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
+<x-livewire-alert::scripts />
 </body>
 
 </html>

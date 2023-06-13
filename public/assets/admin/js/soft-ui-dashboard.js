@@ -29,8 +29,11 @@
     };
 
     if (document.getElementsByClassName('navbar-collapse')[0]) {
-      var fixedplugin = document.querySelector('.navbar:not(.navbar-expand-lg) .navbar-collapse');
-      var ps2 = new PerfectScrollbar(fixedplugin);
+      if(document.querySelector('.navbar:not(.navbar-expand-lg) .navbar-collapse')){
+
+        var fixedplugin = document.querySelector('.navbar:not(.navbar-expand-lg) .navbar-collapse');
+        var ps2 = new PerfectScrollbar(fixedplugin);
+      }
     };
 
     if (document.getElementsByClassName('fixed-plugin')[0]) {
@@ -70,12 +73,15 @@ if (document.querySelector('.fixed-plugin')) {
       }
     }
   }
-
+  
   if (fixedPluginButtonNav) {
     fixedPluginButtonNav.onclick = function() {
+      console.log('asdsad');
       if (!fixedPlugin.classList.contains('show')) {
+        console.log('2');
         fixedPlugin.classList.add('show');
       } else {
+        console.log('1');
         fixedPlugin.classList.remove('show');
       }
     }

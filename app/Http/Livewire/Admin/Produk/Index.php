@@ -108,7 +108,6 @@ class Index extends Component
 
         $jumlahTotal = 0;
         if ($this->color) {
-
             foreach ($this->color as $k => $v) {
                 $jumlahTotal = $jumlahTotal + $this->qty[$k];
             }
@@ -183,7 +182,6 @@ class Index extends Component
     public function updateProduk()
     {
         try {
-            //code...
             $this->validate([
                 'name' => 'required|min:3|string',
                 'slug' => 'required|string',
