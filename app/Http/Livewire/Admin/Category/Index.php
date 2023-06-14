@@ -35,7 +35,7 @@ class Index extends Component
     public function clearForm()
     {
         $this->image = null;
-        $this->iteration++;
+        $this->iteration=0;
         $this->oldImage = null;
         $this->name = '';
         $this->slug = '';
@@ -120,7 +120,7 @@ class Index extends Component
             $image = $this->image->store('public/upload/category/'); //path => storage/app/public
             $this->category->image = $image;
         }
-        
+
         $this->category->update();
         $this->iteration++;
         $this->clearForm();
