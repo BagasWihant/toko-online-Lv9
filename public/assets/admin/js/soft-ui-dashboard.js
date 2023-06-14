@@ -62,7 +62,11 @@ if (document.querySelector('.fixed-plugin')) {
   var fixedPluginCard = document.querySelector('.fixed-plugin .card');
   var fixedPluginCloseButton = document.querySelectorAll('.fixed-plugin-close-button');
   var navbar = document.getElementById('navbarBlur');
-  var buttonNavbarFixed = document.getElementById('navbarFixed');
+
+  var fixedPlugin1 = document.querySelector('.fixed-plugin1');
+  var fixedPluginButton1 = document.querySelector('.fixed-plugin-button1');
+  var fixedPluginCard1 = document.querySelector('.fixed-plugin .card');
+  var fixedPluginCloseButton1 = document.querySelectorAll('.fixed-plugin-close-button1');
 
   if (fixedPluginButton) {
     fixedPluginButton.onclick = function() {
@@ -73,15 +77,22 @@ if (document.querySelector('.fixed-plugin')) {
       }
     }
   }
-  
+  if (fixedPluginButton1) {
+    fixedPluginButton1.onclick = function() {
+      if (!fixedPlugin1.classList.contains('show')) {
+        fixedPlugin1.classList.add('show');
+      } else {
+        fixedPlugin1.classList.remove('show');
+      }
+    }
+  }
+
   if (fixedPluginButtonNav) {
     fixedPluginButtonNav.onclick = function() {
       console.log('asdsad');
       if (!fixedPlugin.classList.contains('show')) {
-        console.log('2');
         fixedPlugin.classList.add('show');
       } else {
-        console.log('1');
         fixedPlugin.classList.remove('show');
       }
     }
@@ -92,18 +103,20 @@ if (document.querySelector('.fixed-plugin')) {
       fixedPlugin.classList.remove('show');
     }
   })
+  fixedPluginCloseButton1.forEach(function(el) {
+    el.onclick = function() {
+      fixedPlugin1.classList.remove('show');
+      console.log('aaa');
+    }
+})
 
-  document.querySelector('body').onclick = function(e) {
+document.querySelector('body').onclick = function(e) {
     if (e.target != fixedPluginButton && e.target != fixedPluginButtonNav && e.target.closest('.fixed-plugin .card') != fixedPluginCard) {
-      fixedPlugin.classList.remove('show');
+        fixedPlugin.classList.remove('show');
+        console.log('asds');
     }
-  }
+}
 
-  if (navbar) {
-    if (navbar.getAttribute('navbar-scroll') == 'true') {
-      buttonNavbarFixed.setAttribute("checked", "true");
-    }
-  }
 
 }
 
@@ -363,9 +376,9 @@ function debounce(func, wait, immediate) {
 function sidebarType(a) {
   var parent = a.parentElement.children;
   var color = a.getAttribute("data-class");
-  
+
   var colors = [];
-  
+
   for (var i = 0; i < parent.length; i++) {
     parent[i].classList.remove('active');
     colors.push(parent[i].getAttribute('data-class'));

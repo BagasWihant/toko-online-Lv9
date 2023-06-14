@@ -108,14 +108,14 @@
   border-radius: 35%
 }
 
-body {overflow: hidden !important;position: relative;}
+/* body {overflow: hidden !important;position: relative;} */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
- 
+
   .menu .item{
   position: relative;
   cursor: pointer;
  }
- 
+
   .menu .item a{
   color: #33363a;
   font-size: 16px;
@@ -125,32 +125,77 @@ body {overflow: hidden !important;position: relative;}
   line-height: 60px;
   /* padding: 20px 0; */
  }
- 
- 
+
+
   .menu .item i{
   margin-right: 15px;
  }
- 
+
   .menu .item a .dropdown{
   position: absolute;
   right: 0;
   margin: 20px;
   transition: 0.3s ease;
  }
- 
+
   .menu .item .sub-menu{
   background: #929292;
   display: none;
  }
- 
+
   .menu .item .sub-menu a{
   padding-left: 80px;
  }
- 
+
  .rotate{
   transform: rotate(90deg);
  }
 #list-nav-nyaa::-webkit-scrollbar{width:0!important}#list-nav-nyaa{overflow:-moz-scrollbars-none;list-style: none;}
-@media only screen and (min-width: 768px) { 
-  .img-card{height: 20vw;object-fit: cover;}
-}
+@media only screen and (min-width: 768px) {
+  .img-card{height: 15vw;object-fit: cover;}
+}.notify-badge-img-red{
+    position: absolute;
+    right:15px;
+    top:15px;
+    background:#ea0606;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding:5px 5px;
+    font-size:10px;
+}.notify-badge-img-green{
+    position: absolute;
+    right:15px;
+    top:15px;
+    background:#82d616;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding:5px 5px;
+    font-size:10px;
+}.notify-badge-img-warning{
+    position: absolute;
+    right:15px;
+    top:15px;
+    background:#fbcf33;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding:5px 5px;
+    font-size:10px;
+}.icon-button-sm{font-size: 1rem !important;}
+.fixed-plugin1 .card {
+    position: fixed !important;
+    right: -360px;
+    top: 0;
+    height: 100%;
+    left: auto !important;
+    transform: unset !important;
+    width: 360px;
+    border-radius: 0;
+    padding: 0 10px;
+    transition: .2s ease;
+    z-index: 1020;
+  }.fixed-plugin1.show .card {
+    right: 0;
+  }

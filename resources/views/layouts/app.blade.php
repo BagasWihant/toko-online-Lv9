@@ -24,8 +24,8 @@
 
 <body class="g-sidenav-show  bg-gray-100">
 
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky"
+    <main class="main-content position-relative h-100 border-radius-lg">
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 border-radius-xl shadow-none"
             id="navbarBlur" navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
 
@@ -41,11 +41,7 @@
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                         <ul class="navbar-nav  justify-content-end">
-                            <li class="nav-item d-md-none ps-3">
-                                <a href="javascript:;" class="nav-link text-body p-0 h4">
-                                    <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                                </a>
-                            </li>
+
 
                             @guest
                                 @if (Route::has('login'))
@@ -60,7 +56,7 @@
                                     </li>
                                 @endif
                             @else
-                                <li class="bagashidemd">
+                                <li class="">
                                     <a class="nav-link">
                                         <i class="fas fa-shopping-cart"></i>
                                         <span
@@ -94,7 +90,11 @@
                                     </div>
                                 </li>
                             @endguest
-
+                            <li class="nav-item d-md-none ps-3">
+                                <a href="javascript:;" class="nav-link text-body px-0 h4">
+                                    <i class="fas fa-bars fixed-plugin-button-nav cursor-pointer"></i>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                                 <i class="fas fa-shopping-cart"></i>Wishlist
                                 <span class="ct-docs-sidenav-pro-badge">4</span>
                             </a></div>
-                            
+
                         <div class="item">
                             <a class="sub-btn"><i class="fas fa-table"></i> {{ Auth::user()->name }}<i
                                     class="fas fa-angle-right dropdown"></i></a>

@@ -34,7 +34,7 @@ class LoginController extends Controller
         if(Auth::user()->role == '01'){
             return redirect('admin/dashboard')->with('pesan','Selamat datang');
         }else{
-            return redirect('/home')->with('pesan','Berhasil Login');
+            return redirect('/')->with('pesan','Berhasil Login');
         }
     }
 

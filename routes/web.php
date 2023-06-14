@@ -18,10 +18,11 @@ use App\Http\Controllers\User\MarketController;
 |
 */
 
-// Market untuk user umum 
+// Market untuk user umum
 Route::controller(MarketController::class)->group(function () {
     Route::get('/', 'index')->name('home');
-    Route::get('/semua-kategori', 'semuaKategori')->name('semua-kategori');
+    Route::get('/kategori', 'semuaKategori')->name('semua-kategori');
+    Route::get('/kategori/{kategori_slug}', 'produk')->name('produk-kategori');
 });
 Auth::routes();
 
@@ -38,6 +39,6 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::controller(ProdukController::class)->group(function () {
         Route::get('product', 'index')->name('product');
     });
-    
+
     Route::get('slider', [SliderController::class,'index'])->name('slider');
 });
