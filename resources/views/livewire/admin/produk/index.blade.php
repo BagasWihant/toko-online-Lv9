@@ -45,8 +45,8 @@
                                     </button>
                                 </div>
                                 @endif
-                                
-                                
+
+
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <button class="nav-link active" id="nav-data-tab" data-bs-toggle="tab"
@@ -58,7 +58,7 @@
                                             aria-controls="nav-gambar" aria-selected="false">Gambar</button>
                                         <button class="nav-link" id="nav-warna-tab" data-bs-toggle="tab"
                                             wire:ignore.self data-bs-target="#nav-warna" type="button" role="tab"
-                                            aria-controls="nav-warna" aria-selected="false">Warna</button>
+                                            aria-controls="nav-warna" aria-selected="false">Warna / Jumlah</button>
                                     </div>
                                 </nav>
 
@@ -108,7 +108,7 @@
                                                 @enderror
                                             </div>
                                             <div class="col-md-6">
-                                                <label>Slug</label>
+                                                <label>Slug / Link</label>
                                                 <div class="input-group">
                                                     <input type="text"
                                                         class="form-control @error('slug') is-invalid @enderror"
@@ -134,20 +134,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Harga Beli</label>
-                                                <div class="input-group">
-                                                    <input type="text"
-                                                        class="form-control @error('harga_asli') is-invalid @enderror"
-                                                        wire:model="harga_asli" placeholder="Harga Beli"
-                                                        aria-label="Harga Beli" name="harga_asli">
-                                                </div>
-                                                @error('harga_asli')
-                                                    <span class="text-danger"
-                                                        style="font-size:0.7rem !important;">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Harga Jual</label>
+                                                <label>Harga</label>
                                                 <div class="input-group">
                                                     <input type="text"
                                                         class="form-control @error('harga_jual') is-invalid @enderror"
@@ -159,9 +146,7 @@
                                                         style="font-size:0.7rem !important;">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-3">
                                                 <label class="form-check-label" for="status">Tampilkan
                                                     Produk</label>
                                                 <div class="form-check form-switch">
@@ -169,7 +154,7 @@
                                                         name="status" checked="" wire:model="status">
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-3">
                                                 <label class="form-check-label" for="status">Trending
                                                     Produk</label>
                                                 <div class="form-check form-switch">
@@ -178,43 +163,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Meta Title</label>
-                                                <div class="input-group">
-                                                    <input type="text"
-                                                        class="form-control @error('meta_title') is-invalid @enderror"
-                                                        wire:model="meta_title" placeholder="Meta Title"
-                                                        aria-label="Meta Title" name="meta_title">
-                                                </div>
-
-                                                @error('meta_title')
-                                                    <span class="text-danger"
-                                                        style="font-size:0.7rem !important;">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Meta Keyword</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text"
-                                                        class="form-control @error('meta_keyword') is-invalid @enderror"
-                                                        wire:model="meta_keyword" placeholder="Meta Keyword"
-                                                        aria-label="Meta Keyword" name="meta_keyword">
-                                                </div>
-
-                                                @error('meta_keyword')
-                                                    <span class="text-danger"
-                                                        style="font-size:0.7rem !important;">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <label>Meta Deskripsi</label>
-                                            <div class="input-group mb-3">
-                                                <textarea type="text" class="form-control @error('meta_deskripsi') is-invalid @enderror"
-                                                    wire:model="meta_deskripsi" placeholder="Meta Deskripsi" aria-label="Meta Deskripsi" name="meta_deskripsi"></textarea>
-                                            </div>
                                         </div>
                                     </div>
                                     <div wire:ignore.self class="tab-pane fade" id="nav-gambar" role="tabpanel"
@@ -299,13 +247,13 @@
                                         @foreach ($productWarna as $index=>$value)
                                             <div class="row">
                                                 <div class="col-7">
-                                                    <label>WARNA</label>
+                                                    <label>Warna / Tipe</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" wire:model="color.{{ $index }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-5">
-                                                    <label for="">JUMLAH</label>
+                                                    <label for="">Jumlah</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" required
                                                             wire:model="qty.{{ $index }}">
@@ -317,14 +265,14 @@
                                         @foreach ($warna as $key => $value)
                                             <div class="row">
                                                 <div class="col-7">
-                                                    <label>WARNA</label>
+                                                    <label>Warna / Tipe</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" required
                                                             wire:model="color.{{ $value }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-5">
-                                                    <label for="">JUMLAH</label>
+                                                    <label for="">Jumlah</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" required
                                                             wire:model="qty.{{ $value }}">

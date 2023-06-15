@@ -19,23 +19,28 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $errorValidasi = '',$produk_id, $name, $brand, $slug, $status, $deskripsi, $image = [], $oldImage = null, $kategori_id,
-        $meta_title, $meta_keyword, $meta_deskripsi, $kondisiModal = 'tambah', $produk, $trending, $harga_asli, $harga_jual, $jumlah, $warna = [];
+        $kondisiModal = 'tambah', $produk, $trending, $harga_jual, $jumlah, $warna = [];
     public $iteration = 0, $totalWarna = 1, $color, $qty; // untuk id upload ben bar upload ke reset
 
     // image
     public $productWarna;
 
-    
+
 
 
     protected $listeners = ['terhapus' => '$refresh'];
     protected $rules = [
-        'name' => 'required|min:3|string|unique:categories',
+        'name' => 'required|min:3|string|unique:products',
         'slug' => 'required|string',
+        'kategori_id' => 'required',
         'deskripsi' => 'required|string',
         'harga_jual' => 'required|integer',
-        'harga_asli' => 'required|integer',
-        'image' => 'nullable',
+        'image' => 'required',
+        'color' => 'required',
+    ];
+    protected $messages = [
+        'color.required' => 'Mohon isi Warna / Tipe & jumlah produk',
+        'image.required' => 'Mohon isi Gambar produk',
     ];
     public function clear()
     {
@@ -50,12 +55,8 @@ class Index extends Component
         $this->image = null;
         $this->oldImage = null;
         $this->kategori_id = '';
-        $this->meta_title = '';
-        $this->meta_keyword = '';
-        $this->meta_deskripsi = '';
         $this->produk = '';
         $this->trending = '';
-        $this->harga_asli = '';
         $this->harga_jual = '';
         $this->jumlah = '';
         $this->kondisiModal = 'tambah';
@@ -86,11 +87,7 @@ class Index extends Component
         $this->status = $this->produk->status;
         $this->deskripsi = $this->produk->deskripsi;
         $this->kategori_id = $this->produk->kategori_id;
-        $this->meta_title = $this->produk->meta_title;
-        $this->meta_keyword = $this->produk->meta_keyword;
-        $this->meta_deskripsi = $this->produk->meta_deskripsi;
         $this->trending = $this->produk->trending;
-        $this->harga_asli = $this->produk->harga_asli;
         $this->harga_jual = $this->produk->harga_jual;
         $this->jumlah = $this->produk->jumlah;
         $img = $this->produk->productImage;
@@ -105,7 +102,6 @@ class Index extends Component
 
     public function tambahProduk()
     {
-
         $jumlahTotal = 0;
         if ($this->color) {
             foreach ($this->color as $k => $v) {
@@ -123,12 +119,8 @@ class Index extends Component
             'brand' => $this->brand,
             'slug' => $this->slug,
             'deskripsi' => $this->deskripsi,
-            'harga_asli' => $this->harga_asli,
             'harga_jual' => $this->harga_jual,
             'jumlah' => $jumlahTotal,
-            'meta_title' => $this->meta_title,
-            'meta_keyword' => $this->meta_keyword,
-            'meta_deskripsi' => $this->meta_deskripsi,
             'trending' => $this->trending ? '1' : '0',
             'status' => $this->status ? '1' : '0',
         ]);
@@ -187,7 +179,6 @@ class Index extends Component
                 'slug' => 'required|string',
                 'deskripsi' => 'required|string',
                 'harga_jual' => 'required|integer',
-                'harga_asli' => 'required|integer',
                 'image' => 'nullable',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -209,12 +200,8 @@ class Index extends Component
         $this->produk->brand = $this->brand;
         $this->produk->slug = $this->slug;
         $this->produk->deskripsi = $this->deskripsi;
-        $this->produk->harga_asli = $this->harga_asli;
         $this->produk->harga_jual = $this->harga_jual;
         $this->produk->jumlah = $jumlahTotal;
-        $this->produk->meta_title = $this->meta_title;
-        $this->produk->meta_keyword = $this->meta_keyword;
-        $this->produk->meta_deskripsi = $this->meta_deskripsi;
         $this->produk->trending = $this->trending ? '1' : '0';
         $this->produk->status = $this->status ? '1' : '0';
         $this->produk->update();
