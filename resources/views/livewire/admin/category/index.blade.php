@@ -40,7 +40,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Slug</label>
+                                            <label>Slug / Link</label>
                                             <div class="input-group">
                                                 <input type="text"
                                                     class="form-control @error('slug') is-invalid @enderror"
@@ -89,41 +89,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Meta Title</label>
-                                            <div class="input-group">
-                                                <input type="text"
-                                                    class="form-control @error('meta_title') is-invalid @enderror"
-                                                    wire:model="meta_title" placeholder="Meta Title"
-                                                    aria-label="Meta Title" name="meta_title">
-                                            </div>
-
-                                            @error('meta_title')
-                                                <span class="text-danger"
-                                                    style="font-size:0.7rem !important;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Meta Keyword</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text"
-                                                    class="form-control @error('meta_keyword') is-invalid @enderror"
-                                                    wire:model="meta_keyword" placeholder="Meta Keyword"
-                                                    aria-label="Meta Keyword" name="meta_keyword">
-                                            </div>
-
-                                            @error('meta_keyword')
-                                                <span class="text-danger"
-                                                    style="font-size:0.7rem !important;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <label>Meta Deskripsi</label>
-                                    <div class="input-group mb-3">
-                                        <textarea type="text" class="form-control @error('meta_description') is-invalid @enderror"
-                                            wire:model="meta_description" placeholder="Meta Deskripsi" aria-label="Meta Deskripsi" name="meta_description"></textarea>
                                     </div>
                                     <label class="form-check-label" for="status">Tampilkan Kategori</label>
                                     <div class="form-check form-switch">
@@ -185,7 +150,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Slug</label>
+                                            <label>Slug / Link</label>
                                             <div class="input-group">
                                                 <input type="text"
                                                     class="form-control @error('slug') is-invalid @enderror"
@@ -240,41 +205,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Meta Title</label>
-                                            <div class="input-group">
-                                                <input type="text"
-                                                    class="form-control @error('meta_title') is-invalid @enderror"
-                                                    wire:model="meta_title" placeholder="Meta Title"
-                                                    aria-label="Meta Title" name="meta_title">
-                                            </div>
-
-                                            @error('meta_title')
-                                                <span class="text-danger"
-                                                    style="font-size:0.7rem !important;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Meta Keyword</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text"
-                                                    class="form-control @error('meta_keyword') is-invalid @enderror"
-                                                    wire:model="meta_keyword" placeholder="Meta Keyword"
-                                                    aria-label="Meta Keyword" name="meta_keyword">
-                                            </div>
-
-                                            @error('meta_keyword')
-                                                <span class="text-danger"
-                                                    style="font-size:0.7rem !important;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <label>Meta Deskripsi</label>
-                                    <div class="input-group mb-3">
-                                        <textarea type="text" class="form-control @error('meta_description') is-invalid @enderror"
-                                            wire:model="meta_description" placeholder="Meta Deskripsi" aria-label="Meta Deskripsi" name="meta_description"></textarea>
                                     </div>
                                     <div class="text-center">
                                         <button type="submit"

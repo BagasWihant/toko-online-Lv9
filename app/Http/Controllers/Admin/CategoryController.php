@@ -29,9 +29,6 @@ class CategoryController extends Controller
         $category->name = $validatedData['name'];
         $category->slug = Str::slug($validatedData['slug']);
         $category->description = $validatedData['description'];
-        $category->meta_title = $validatedData['meta_title'];
-        $category->meta_keyword = $validatedData['meta_keyword'];
-        $category->meta_description = $validatedData['meta_description'];
 
         if($request->hasFile('image')){
             $path = 'upload/category/'. $category->image;
@@ -56,9 +53,6 @@ class CategoryController extends Controller
         $category->name = $validatedData['name'];
         $category->slug = Str::slug($validatedData['slug']);
         $category->description = $validatedData['description'];
-        $category->meta_title = $validatedData['meta_title'];
-        $category->meta_keyword = $validatedData['meta_keyword'];
-        $category->meta_description = $validatedData['meta_description'];
 
         if($request->hasFile('image')){
             $file = $request->file('image');
