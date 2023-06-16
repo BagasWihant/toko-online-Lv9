@@ -22,7 +22,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="min-vh-50 position-absolute w-100 top-0">
+        <div class="min-vh-50 position-absolute w-100 top-0 bagashidemd">
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>

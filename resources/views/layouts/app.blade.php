@@ -32,7 +32,7 @@
                 <a class="navbar-brand mx-3 bagashidemd" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center bagas-search-xs">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Type here...">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
@@ -60,14 +60,14 @@
                                     <a class="nav-link">
                                         <i class="fas fa-shopping-cart"></i>
                                         <span
-                                            class="badge badge-md badge-circle badge-floating badge-danger border-white">4</span>
+                                            class="badge badge-md badge-circle badge-floating bg-primary text-white">4</span>
                                     </a>
                                 </li>
                                 <li class="bagashidemd">
                                     <a class="nav-link">
                                         <i class="fas fa-heart"></i>
                                         <span
-                                            class="badge badge-md badge-circle badge-floating badge-danger border-white">4</span>
+                                            class="badge badge-md badge-circle badge-floating bg-primary text-white">4</span>
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown bagashidemd">
@@ -140,12 +140,12 @@
                     @else
                         <div class="item"><a class="nav-link d-block">
                                 <i class="fas fa-shopping-cart"></i>Keranjang
-                                <span class="ct-docs-sidenav-pro-badge">4</span>
+                                <span class="ct-docs-sidenav-pro-badge bg-primary text-white">4</span>
                             </a></div>
 
                         <div class="item"><a class="nav-link d-block">
                                 <i class="fas fa-shopping-cart"></i>Wishlist
-                                <span class="ct-docs-sidenav-pro-badge">4</span>
+                                <span class="ct-docs-sidenav-pro-badge bg-primary text-white">4</span>
                             </a></div>
 
                         <div class="item">

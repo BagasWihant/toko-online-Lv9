@@ -28,4 +28,13 @@ class MarketController extends Controller
             return redirect()->back();
         }
     }
+    public function produkDetail($kategori_slug,$produk_slug) {
+        $kategori = Category::where('slug',$kategori_slug)->first();
+        if($kategori){
+            $produk = $kategori->product()->where('kategori_id',$kategori->id)->where('slug',$produk_slug)->first();
+            return view('user.produk.produkdetail',compact('produk','kategori'));
+        }else{
+            return redirect()->back();
+        }
+    }
 }

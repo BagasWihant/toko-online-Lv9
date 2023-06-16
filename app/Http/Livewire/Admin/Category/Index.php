@@ -21,7 +21,7 @@ class Index extends Component
 
     protected $rules = [
         'name' => 'required|min:3|string|unique:categories',
-        'slug' => 'required|string',
+        'slug' => 'required|string|unique:categories',
         'description' => 'required|string',
     ];
     // syntax bawaan go live cek on keyup

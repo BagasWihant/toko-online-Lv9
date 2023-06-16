@@ -23,6 +23,7 @@ Route::controller(MarketController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/kategori', 'semuaKategori')->name('semua-kategori');
     Route::get('/kategori/{kategori_slug}', 'produk')->name('produk-kategori');
+    Route::get('/detail/{kategori_slug}/{produk_slug}', 'produkDetail')->name('produk-detail');
 });
 Auth::routes();
 
@@ -30,6 +31,7 @@ Auth::routes();
 
 // admin
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
+    // dd(Auth::user());
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
 
     Route::controller(CategoryController::class)->group(function () {
