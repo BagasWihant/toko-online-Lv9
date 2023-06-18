@@ -57,17 +57,17 @@
                                 @endif
                             @else
                                 <li class="">
-                                    <a class="nav-link">
+                                    <a class="nav-link" href="{{ route('keranjang') }}">
                                         <i class="fas fa-shopping-cart"></i>
                                         <span
-                                            class="badge badge-md badge-circle badge-floating bg-primary text-white">4</span>
+                                            class="badge badge-md badge-circle badge-floating bg-primary text-white">@livewire('user.keranjang-count')</span>
                                     </a>
                                 </li>
                                 <li class="bagashidemd">
-                                    <a class="nav-link">
+                                    <a class="nav-link" href="{{ route('wishlist') }}">
                                         <i class="fas fa-heart"></i>
                                         <span
-                                            class="badge badge-md badge-circle badge-floating bg-primary text-white">4</span>
+                                            class="badge badge-md badge-circle badge-floating bg-primary text-white">@livewire('user.wishlist-count')</span>
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown bagashidemd">
@@ -138,14 +138,14 @@
                                     href="{{ route('register') }}">{{ __('Register') }}</a></div>
                         @endif
                     @else
-                        <div class="item"><a class="nav-link d-block">
+                        <div class="item"><a class="nav-link d-block" href="{{ route('keranjang') }}">
                                 <i class="fas fa-shopping-cart"></i>Keranjang
-                                <span class="ct-docs-sidenav-pro-badge bg-primary text-white">4</span>
+                                <span class="ct-docs-sidenav-pro-badge bg-primary text-white">@livewire('user.keranjang-count')</span>
                             </a></div>
 
-                        <div class="item"><a class="nav-link d-block">
+                        <div class="item"><a class="nav-link d-block" href="{{ route('wishlist') }}">
                                 <i class="fas fa-shopping-cart"></i>Wishlist
-                                <span class="ct-docs-sidenav-pro-badge bg-primary text-white">4</span>
+                                <span class="ct-docs-sidenav-pro-badge bg-primary text-white">@livewire('user.wishlist-count')</span>
                             </a></div>
 
                         <div class="item">

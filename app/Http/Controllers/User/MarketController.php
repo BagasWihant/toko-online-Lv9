@@ -4,8 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Keranjang;
 use App\Models\Slider;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarketController extends Controller
 {
@@ -36,5 +39,15 @@ class MarketController extends Controller
         }else{
             return redirect()->back();
         }
+    }
+
+    public function keranjang(){
+        $data = Keranjang::where('user_id',Auth::id())->get();
+        return view('user.keranjang',compact('data'));
+    }
+
+    public function wishlist(){
+        $data = Wishlist::where('user_id',Auth::id())->get();
+        return view('user.wishlist',compact('data'));
     }
 }
