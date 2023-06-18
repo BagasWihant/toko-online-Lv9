@@ -224,9 +224,9 @@
                                                         <div class="card move-on-hover col-md-2 mx-2 my-1 text-center"
                                                             id="hapusgambar{{ $img->id }}">
                                                             <div class="">
-                                                                <img src="{{ Storage::url($img->gambar) }}"
+                                                                <img src="{{ asset($img->gambar) }}"
                                                                     alt="previewADD"
-                                                                    onclick="previewImage('{{ Storage::url($img->gambar) }}')"
+                                                                    onclick="previewImage('{{ asset($img->gambar) }}')"
                                                                     class="w-100 rounded img-cover-150"
                                                                     data-bs-target="#previewImage"
                                                                     data-bs-toggle="modal" data-bs-dismiss="modal">

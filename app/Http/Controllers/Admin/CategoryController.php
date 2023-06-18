@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\CategoryRequest;
@@ -59,7 +58,8 @@ class CategoryController extends Controller
             $ext = $file->getClientOriginalExtension();
             $fileName = time().'.'.$ext;
 
-            $file->move('upload/category/',$fileName);
+            $file->storePublicly('upload', $fileName, 's3');
+            // $file->move('upload/category/',$fileName);
             $category->image = $fileName;
         }
         $category->status = $request->status == 'on' ? '1' : '0';

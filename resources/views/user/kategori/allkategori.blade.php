@@ -10,7 +10,7 @@
                         <a href="{{ url('/kategori/'.$kat->slug) }}">
                             <div class="p-3">
                                 <img class="w-100 border-radius-md img-card"
-                                    src="{{ Storage::url($kat->image) }}">
+                                    src="{{ asset($kat->image) }}">
                             </div>
                             <div class="card-body blur justify-content-center text-center mx-4 mb-4 border-radius-md">
                                 <h4 class="mb-0">{{ $kat->name }}</h4>

@@ -64,7 +64,8 @@ class Index extends Component
             $this->validate([
                 'image' => 'image|max:7017',
             ]);
-            $image = $this->image->store('public/upload/category/'); //path => storage/app/public
+            $image = $this->image->storePublicly('upload/kategori', 'real_public');
+
             $category->image = $image;
         }
         $category->save();
@@ -74,7 +75,9 @@ class Index extends Component
     }
 
     public function hapusKategori(){
-
+        if (File::exists(public_path($this->category->image))) {
+            File::delete(public_path($this->category->image));
+        }
         $this->category->delete();
         $this->clearForm();
         $this->dispatchBrowserEvent('hapusKategori');
@@ -83,13 +86,14 @@ class Index extends Component
 
 
     public function updateKategori(){
+
         $this->validate([
             'name' => 'required|min:3|string|',
             'slug' => 'required|string',
             'description' => 'required|string',
         ]);
 
-        // $category = Category::find($this->category_id);
+
 
         $this->category->name = $this->name;
         $this->category->slug = Str::slug($this->slug);
@@ -99,7 +103,11 @@ class Index extends Component
             $this->validate([
                 'image' => 'image|max:7017',
             ]);
-            $image = $this->image->store('public/upload/category/'); //path => storage/app/public
+            $category = Category::find($this->category_id);
+            if (File::exists(public_path($category->image))) {
+                File::delete(public_path($category->image));
+            }
+            $image = $this->image->storePublicly('upload/kategori', 'real_public');
             $this->category->image = $image;
         }
 

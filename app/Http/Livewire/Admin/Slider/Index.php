@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Slider;
 
 use App\Models\Slider;
+use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -61,6 +62,9 @@ class Index extends Component
     }
     public function deleteAksi()
     {
+        if (File::exists(public_path($this->slider->image))) {
+            File::delete(public_path($this->slider->image));
+        }
         $this->slider->delete();
         $this->alert('success', 'Sukses', [
             'position' => 'top-end',
@@ -82,7 +86,7 @@ class Index extends Component
         ]);
         $image = '';
         if ($this->image != null) {
-            $image = $this->image->store('public/upload/slider/');
+            $image = $this->image->storePublicly('upload/slider', 'real_public');
         }
         Slider::create([
             'title' => $this->title,
@@ -102,6 +106,7 @@ class Index extends Component
             ]
         ]);
         $this->iteration++;
+
         $this->clearForm();
     }
 
@@ -115,8 +120,8 @@ class Index extends Component
         $slider->title = $this->title;
         $slider->deskripsi = $this->deskripsi;
         if ($this->image != null) {
-            if (Storage::exists($slider->image)) {
-                Storage::delete($slider->image);
+            if (File::exists(public_path($slider->image))) {
+                File::delete(public_path($slider->image));
             }
             $image = $this->image->store('public/upload/slider/');
             $slider->image = $image;

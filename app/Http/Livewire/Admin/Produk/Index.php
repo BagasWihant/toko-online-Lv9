@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\GambarProduk;
 use App\Models\Product;
 use App\Models\ProdukWarna;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -69,8 +70,8 @@ class Index extends Component
     public function hapusGambar($id)
     {
         $gambar = GambarProduk::findOrFail($id);
-        if (Storage::exists($gambar->gambar)) {
-            Storage::delete($gambar->gambar);
+        if (File::exists(public_path($gambar->gambar))) {
+            File::delete(public_path($gambar->gambar));
         }
         $gambar->delete();
         $this->emit('terhapus');
@@ -140,8 +141,8 @@ class Index extends Component
                 'image.*' => 'image|max:7017',
             ]);
             foreach ($this->image as $key => $img) {
-
-                $image = $img->store('public/upload/produk/'); //path => storage/app/public
+                $image = $img->storePublicly('upload/produk', 'real_public');
+                // $image = $img->store('public/upload/produk/'); //path => storage/app/public
                 $product->productImage()->create([
                     'produk_id' => $product->id,
                     'gambar' => $image,
@@ -160,8 +161,8 @@ class Index extends Component
         if ($this->produk->productImage) {
             foreach ($this->produk->productImage as $img) {
                 $gambar = GambarProduk::findOrFail($img->id);
-                if (Storage::exists($gambar->gambar)) {
-                    Storage::delete($gambar->gambar);
+                if (File::exists(public_path($gambar->gambar))) {
+                    File::delete(public_path($gambar->gambar));
                 }
                 $gambar->delete();
             }

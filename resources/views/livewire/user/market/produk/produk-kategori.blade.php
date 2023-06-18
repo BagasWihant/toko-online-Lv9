@@ -10,7 +10,7 @@
                     <a href="{{ url('/detail/' . $p->category->slug . '/' . $p->slug) }}">
                         <div class="p-3">
                             <img class="w-100 border-radius-md img-card"
-                                src="{{ Storage::url($p->productImage[0]->gambar) }}">
+                                src="{{ asset($p->productImage[0]->gambar) }}">
                             @if ($p->jumlah > 10)
                                 <span class="notify-badge-img-green">Stok Tersedia</span>
                             @elseif ($p->jumlah <= 10 && $p->jumlah > 0)

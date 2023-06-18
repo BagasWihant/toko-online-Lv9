@@ -6,7 +6,7 @@
                 <div class="position-relative">
                     <div class="blur-shadow-image">
                         <img class="w-100 rounded-3 shadow-lg img-card-xl"
-                            src="{{ Storage::url($produk->productImage[0]->gambar) }}">
+                            src="{{ asset($produk->productImage[0]->gambar) }}">
                     </div>
                 </div>
             </div>

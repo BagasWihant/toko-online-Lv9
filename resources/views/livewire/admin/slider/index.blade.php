@@ -82,8 +82,8 @@
                                         <div class="col-md-4 align-self-center">
                                             <div class="text-center">
                                                 @if ($oldImage != null)
-                                                    <img src="{{ Storage::url($oldImage) }}" alt="previewADD"
-                                                        onclick="previewImage('{{ Storage::url($oldImage) }}')"
+                                                    <img src="{{ asset($oldImage) }}" alt="previewADD"
+                                                        onclick="previewImage('{{ asset($oldImage) }}')"
                                                         class="avatar rounded" data-bs-target="#previewImage"
                                                         data-bs-toggle="modal" data-bs-dismiss="modal">
                                                 @endif
@@ -198,7 +198,7 @@
                                     <div class="my-auto">
                                         @if ($d->image)
                                             <div>
-                                                <img src="{{ Storage::url($d->image) }}"
+                                                <img src="{{ asset($d->image) }}"
                                                     class="avatar avatar-sm me-3" alt="user2">
                                             </div>
                                         @else
@@ -221,7 +221,7 @@
                                     data-bs-target="#tambahSlider" class="btn btn-link text-warning text-gradient">
                                     <span class="btn-inner--icon"><i class="fas fa-edit me-2"></i>edit</span>
                                 </a>
-                                <button wire:click="getID({{ $d->id }},'delete')" 
+                                <button wire:click="getID({{ $d->id }},'delete')"
                                     class="btn btn-link text-danger text-gradient " type="button">
                                     <span class="btn-inner--icon"><i class="fas fa-trash me-2"></i>delete</span>
                                 </button>

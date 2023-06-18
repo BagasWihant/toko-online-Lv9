@@ -191,8 +191,8 @@
                                         <div class="col-md-6 align-self-center">
                                             <div class="text-center">
                                                 @if ($oldImage)
-                                                <img src="{{ Storage::url($oldImage) }}" alt="preview"
-                                                    onclick="previewImage('{{ Storage::url($oldImage) }}')"
+                                                <img src="{{ asset($oldImage) }}" alt="preview"
+                                                    onclick="previewImage('{{ asset($oldImage) }}')"
                                                     class="avatar rounded" data-bs-target="#previewImage"
                                                     data-bs-toggle="modal" data-bs-dismiss="modal">
                                                 @endif
@@ -312,7 +312,7 @@
                                 <div class="d-flex px-2">
                                     <div>
                                         @if ($d->image != '')
-                                            <img src="{{ Storage::url($d->image) }}" class="avatar shadow me-2">
+                                            <img src="{{ asset($d->image) }}" class="avatar shadow me-2">
                                         @else
                                             <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-spotify.svg"
                                                 class="avatar shadow me-2">

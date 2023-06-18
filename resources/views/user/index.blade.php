@@ -8,7 +8,7 @@
             @foreach ($slider as $sld)
                 <div class="carousel-item @if ($loop->index == 0) active @else '' @endif">
                     <div class="page-header min-vh-50 m-3 border-radius-xl"
-                        style="background-image: url('{{ Storage::url($sld->image) }}');">
+                        style="background-image: url('{{ asset($sld->image) }}');">
                         <span class="mask bg-gradient-dark"></span>
                         <div class="container">
                             <div class="row">
