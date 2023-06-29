@@ -18,15 +18,17 @@
     <link id="pagestyle" href="{{ asset('assets/admin/css/soft-ui-dashboardnew.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js.js') }}"></script>
     <!-- Font Awesome Icons -->
+    @stack('midtrans-top')
+
     <script src="{{ asset('assets/admin/js/fontawesomekit.js') }}"></script>
     @livewireStyles
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
 
-    <main class="main-content position-relative h-100 border-radius-lg">
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 border-radius-xl shadow-none"
-            id="navbarBlur" navbar-scroll="true">
+    <main class="main-content position-relative border-radius-lg">
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 border-radius-xl shadow-none" id="navbarBlur"
+            navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
 
                 <a class="navbar-brand mx-3 bagashidemd" href="{{ url('/') }}">
@@ -77,6 +79,10 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                        <a class="dropdown-item" href="{{ route('user-settings') }}">
+                                            Setting
+                                         </a>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
@@ -87,6 +93,8 @@
                                             class="d-none">
                                             @csrf
                                         </form>
+
+
                                     </div>
                                 </li>
                             @endguest
@@ -100,7 +108,7 @@
                 </div>
             </div>
         </nav>
-       @yield('nav-menu')
+        @yield('nav-menu')
 
         <div class="py-2">
             @yield('content')
@@ -152,6 +160,10 @@
                             <a class="sub-btn"><i class="fas fa-table"></i> {{ Auth::user()->name }}<i
                                     class="fas fa-angle-right dropdown"></i></a>
                             <div class="sub-menu border-radius-xl ">
+
+                                <a  href="{{ route('user-settings') }}">
+                                    Setting
+                                 </a>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit(); "class="sub-item">{{ __('Logout') }}</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

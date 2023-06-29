@@ -6,3 +6,4 @@
     {{-- {{ dd($produk) }} --}}
    <livewire:user.market.produk.produk-kategori :produk="$produk" :kategori="$kategori"/>
 @endsection
+@stack('script')

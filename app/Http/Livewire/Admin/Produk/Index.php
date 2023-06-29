@@ -119,6 +119,7 @@ class Index extends Component
             'name' => $this->name,
             'brand' => $this->brand,
             'slug' => $this->slug,
+            'kategori_id' => $this->kategori_id,
             'deskripsi' => $this->deskripsi,
             'harga_jual' => $this->harga_jual,
             'jumlah' => $jumlahTotal,
@@ -198,6 +199,7 @@ class Index extends Component
             $jumlahTotal = $jumlahTotal + $this->qty[$k];
         }
         $this->produk->name = $this->name;
+        $this->produk->kategori_id = $this->kategori_id;
         $this->produk->brand = $this->brand;
         $this->produk->slug = $this->slug;
         $this->produk->deskripsi = $this->deskripsi;

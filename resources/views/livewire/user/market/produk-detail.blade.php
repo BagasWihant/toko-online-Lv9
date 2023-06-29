@@ -4,8 +4,39 @@
             <div class="col-md-5 align-items-stretch">
                 <div class="position-relative">
                     <div class="blur-shadow-image">
-                        <img class="w-100 rounded-3 shadow-lg img-card-xl"
-                            src="{{ asset($produk->productImage[0]->gambar) }}">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($produk->productImage as $img)
+                                    <div class="carousel-item @if ($loop->index == 0) active @else '' @endif">
+                                        <div class="page-header min-vh-50 m-3 border-radius-xl"
+                                            style="background-image: url('{{ asset($img->gambar) }}');">
+                                            {{-- <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-6 my-auto">
+                                                        <h1 class="text-white fadeIn2 fadeInBottom">{{ $sld->title }}
+                                                        </h1>
+                                                        <p class="lead text-white opacity-8 fadeIn3 fadeInBottom">
+                                                            {{ $sld->deskripsi }}</p>
+                                                    </div>
+                                                </div>
+                                            </div> --}}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="min-vh-50 position-absolute w-100 top-0 bagashidemd">
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                                    <span class=" position-absolute bottom-50" aria-hidden="true"><i class="fas fa-arrow-circle-left text-danger"></i></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                                    <span class=" position-absolute bottom-50" aria-hidden="true"><i class="fas fa-arrow-circle-right text-danger"></i></span>
+                                    <span class="visually-hidden">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                        {{-- <img class="w-100 rounded-3 shadow-lg img-card-xl"
+                            src="{{ asset($produk->productImage[0]->gambar) }}"> --}}
                         @if ($jumlahWarnaIni > 10)
                             <span class="notify-badge-img-green">Stok Tersedia</span>
                         @elseif ($jumlahWarnaIni <= 10 && $jumlahWarnaIni > 0)
@@ -55,12 +86,14 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <button class="btn btn-lg btn-success w-100 bg-gradient-success" wire:click='masukKeranjang({{ $produk->id }})'><i
-                                    class="fas fa-cart-plus" ></i> Keranjang</button>
+                            <button class="btn btn-lg btn-success w-100 bg-gradient-success"
+                                wire:click='masukKeranjang({{ $produk->id }})'><i class="fas fa-cart-plus"></i>
+                                Keranjang</button>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-lg btn-danger w-100 bg-gradient-danger" wire:click='masukWishlist({{ $produk->id }})'><i
-                                    class="fas fa-heart"></i> Wishlist</button>
+                            <button class="btn btn-lg btn-danger w-100 bg-gradient-danger"
+                                wire:click='masukWishlist({{ $produk->id }})'><i class="fas fa-heart"></i>
+                                Wishlist</button>
                         </div>
                     </div>
                 </div>

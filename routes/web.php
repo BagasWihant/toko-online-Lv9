@@ -21,6 +21,8 @@ use App\Http\Controllers\User\MarketController;
 // Market untuk user umum
 Route::controller(MarketController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+    Route::get('/user-settings', 'user_settings')->name('user-settings');
+    Route::get('/checkout', 'checkout')->name('checkout');
     Route::get('/keranjang', 'keranjang')->name('keranjang');
     Route::get('/wishlist', 'wishlist')->name('wishlist');
     Route::get('/kategori', 'semuaKategori')->name('semua-kategori');

@@ -6,7 +6,7 @@
         <div class="row">
             @foreach ($kategori as $kat)
                 <div class="col-md-3 d-flex align-items-stretch mb-3">
-                    <div class="card card-profile mt-md-0 mt-5">
+                    <div class="card card-profile mt-md-0 mt-5 w-100">
                         <a href="{{ url('/kategori/'.$kat->slug) }}">
                             <div class="p-3">
                                 <img class="w-100 border-radius-md img-card"
