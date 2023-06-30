@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Keranjang;
 use App\Models\Order;
 use App\Models\Slider;
-use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,7 +63,30 @@ class MarketController extends Controller
     public function checkout()
     {
         if (Auth::check()) {
-            return view('user.checkout');
+            $keranjang = Keranjang::where('user_id', Auth::id());
+            if($keranjang->exists()){
+                return view('user.checkout');
+            }
+            return redirect(route('keranjang'));
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    public function payment(Request $req){
+        if (Auth::check()) {
+
+            $order = Order::where('transaksi_id', $req->trx);
+            if($order->exists()){
+
+                if($req->token){
+                    return view('user.payment',[
+                        'token' => $req->token
+                    ]);
+                }
+                return redirect(route('home'));
+            }
+            return redirect(route('keranjang'));
         } else {
             return redirect('/login');
         }

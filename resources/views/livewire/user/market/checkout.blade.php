@@ -43,55 +43,5 @@
         Buat pesanan
     </button>
 
-    <input type="hidden" id="snaptoken" value="{{ $snapToken }}">
 </div>
 
-
-@push('midtrans-top')
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="{{ config('midtrans.client_key') }}"></script>
-@endpush
-
-
-@push('script')
-    <script>
-        window.addEventListener('midtrans__token', event => {
-            let snapToken = $('#snaptoken').val();
-            window.snap.pay(snapToken, {
-                onSuccess: function(result) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pembayaran Berhasil',
-                        showConfirmButton: false,
-                        timer: 2500
-                    })
-                },
-                onPending: function(result) {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Menunggu Pembayaran',
-                        showConfirmButton: false,
-                        timer: 2500
-                    })
-                },
-                onError: function(result) {
-                    console.log(result);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'pembayaran GAGAl',
-                        showConfirmButton: false,
-                        timer: 2500
-                    })
-                },
-                onClose: function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'you closed the popup without finishing the payment',
-                        showConfirmButton: false,
-                        timer: 2500
-                    })
-                }
-            })
-        })
-    </script>
-@endpush
