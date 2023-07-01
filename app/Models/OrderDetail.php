@@ -15,4 +15,12 @@ class OrderDetail extends Model
         'qty',
         'produk_warna_id'
     ];
+
+
+    function produk() {
+        return $this->belongsTo(Product::class,'produk_id','id');
+    }
+    function produkWarna() {
+        return $this->belongsTo(ProdukWarna::class,'produk_warna_id','id');
+    }
 }

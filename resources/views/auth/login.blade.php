@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('title','Login')
 @section('content')
+@if(session('pesan'))
+    <h5>{{ session('pesan') }}</h5>
+@endif
     <section class="pt-11">
         <div class="row mt-lg-n10 mt-md-n11 mt-n10">
             <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">

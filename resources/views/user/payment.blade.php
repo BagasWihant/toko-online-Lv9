@@ -21,7 +21,7 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/keranjang?status=success';
+                location.href = '/orders?status=success';
 
 
             },
@@ -32,7 +32,7 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/keranjang?status=waiting';
+                location.href = '/orders?status=waiting';
 
             },
             onError: function(result) {
@@ -42,7 +42,7 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/keranjang?status=err';
+                location.href = '/orders?status=err';
 
             },
             onClose: function() {
@@ -52,7 +52,7 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/keranjang?status=failed';
+                location.href = '/orders?status=failed';
             }
         })
     })

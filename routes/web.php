@@ -24,7 +24,6 @@ Route::controller(MarketController::class)->group(function () {
     Route::get('/user-settings', 'user_settings')->name('user-settings');
 
     Route::get('/checkout', 'checkout')->name('checkout');
-    Route::get('/payment', 'payment')->name('payment');
 
     Route::get('/keranjang', 'keranjang')->name('keranjang');
     Route::get('/wishlist', 'wishlist')->name('wishlist');
@@ -32,6 +31,12 @@ Route::controller(MarketController::class)->group(function () {
     Route::get('/kategori', 'semuaKategori')->name('semua-kategori');
     Route::get('/kategori/{kategori_slug}', 'produk')->name('produk-kategori');
     Route::get('/detail/{kategori_slug}/{produk_slug}', 'produkDetail')->name('produk-detail');
+
+    Route::get('/payment/{payToken}/{trx}', 'payment')->name('payment');
+    Route::prefix('/orders')->group(function () {
+        Route::get('/', 'orders_history')->name('orders');
+    });
+
 });
 Auth::routes();
 
@@ -50,5 +55,5 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('product', 'index')->name('product');
     });
 
-    Route::get('slider', [SliderController::class,'index'])->name('slider');
+    Route::get('slider', [SliderController::class, 'index'])->name('slider');
 });

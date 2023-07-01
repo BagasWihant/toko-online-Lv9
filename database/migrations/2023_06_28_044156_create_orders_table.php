@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('qty');
             $table->string('total_harga');
             $table->string('tipe_pembayaran')->nullable();
+            $table->string('payToken')->nullable();
             $table->string('status',30);
             $table->timestamps();
         });

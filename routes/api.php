@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\User\MarketController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('callback-mid', [MarketController::class,'callback_mid'])->name('callback-mid');
+Route::post('callback-mid', [ApiController::class,'index'])->name('callback-mid');

@@ -91,10 +91,7 @@ class Checkout extends Component
 
         $this->snapToken = \Midtrans\Snap::getSnapToken($params);
         //  $this->dispatchBrowserEvent('midtrans__token');
-        return redirect(route('payment', [
-            'token' => $this->snapToken,
-            'trx' => $transaksi_id
-        ]));
+        return redirect()->route('payment',['payToken'=>$this->snapToken,'trx' => $transaksi_id]);
     }
 
     public function render()

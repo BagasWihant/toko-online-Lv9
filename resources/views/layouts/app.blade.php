@@ -80,6 +80,9 @@
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
+                                        <a class="dropdown-item" href="{{ route('orders') }}">
+                                            History Pembelian
+                                         </a>
                                         <a class="dropdown-item" href="{{ route('user-settings') }}">
                                             Setting
                                          </a>
@@ -161,6 +164,9 @@
                                     class="fas fa-angle-right dropdown"></i></a>
                             <div class="sub-menu border-radius-xl ">
 
+                                <a  href="{{ route('orders') }}">
+                                    Histori Pembelian
+                                 </a>
                                 <a  href="{{ route('user-settings') }}">
                                     Setting
                                  </a>

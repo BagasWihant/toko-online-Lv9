@@ -111,45 +111,15 @@
 /* body {overflow: hidden !important;position: relative;} */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-  .menu .item{
-  position: relative;
-  cursor: pointer;
- }
+/* side menu responsive phone */
+  .menu .item{position: relative;cursor: pointer;}
+  .menu .item a{color: #33363a;font-size: 16px;text-decoration: none;display: block;padding: 5px 0px;line-height: 60px;}
+  .menu .item i{margin-right: 15px;}
+  .menu .item a .dropdown{position: absolute;right: 0;margin: 20px;transition: 0.3s ease;}
+  .menu .item .sub-menu{background: #d2d1d157;display: none;}
+  .menu .item .sub-menu a{padding-left: 2rem;}
+ .rotate{transform: rotate(90deg);}
 
-  .menu .item a{
-  color: #33363a;
-  font-size: 16px;
-  text-decoration: none;
-  display: block;
-  padding: 5px 0px;
-  line-height: 60px;
-  /* padding: 20px 0; */
- }
-
-
-  .menu .item i{
-  margin-right: 15px;
- }
-
-  .menu .item a .dropdown{
-  position: absolute;
-  right: 0;
-  margin: 20px;
-  transition: 0.3s ease;
- }
-
-  .menu .item .sub-menu{
-  background: #929292;
-  display: none;
- }
-
-  .menu .item .sub-menu a{
-  padding-left: 80px;
- }
-
- .rotate{
-  transform: rotate(90deg);
- }
 #list-nav-nyaa::-webkit-scrollbar{width:0!important}#list-nav-nyaa{overflow:-moz-scrollbars-none;list-style: none;}
 @media only screen and (min-width: 768px) {
   .img-card{height: 15vw;object-fit: cover;}.img-card-xl{height: 25vw;object-fit: cover;}.img-card-sm{height: 10vw;object-fit: cover;}

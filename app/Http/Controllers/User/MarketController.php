@@ -2,22 +2,29 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Keranjang;
 use App\Models\Order;
 use App\Models\Slider;
+use App\Models\Category;
+use App\Models\Keranjang;
+use App\Mail\CheckoutMail;
 use Illuminate\Http\Request;
+use Livewire\WithPagination;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class MarketController extends Controller
 {
+    use WithPagination;
+
     public function index()
     {
         $slider = Slider::where('status', 1)->get();
         $kategori = Category::where('status', 1)->get();
         return view('user.index', compact('slider', 'kategori'));
     }
+
     public function semuaKategori()
     {
         $kategori = Category::where('status', 1)->get();
@@ -35,6 +42,7 @@ class MarketController extends Controller
             return redirect()->back();
         }
     }
+
     public function produkDetail($kategori_slug, $produk_slug)
     {
         $kategori = Category::where('slug', $kategori_slug)->first();
@@ -73,15 +81,17 @@ class MarketController extends Controller
         }
     }
 
-    public function payment(Request $req){
+    public function payment($payToken,$trx){
         if (Auth::check()) {
 
-            $order = Order::where('transaksi_id', $req->trx);
+            $order = Order::where('transaksi_id', $trx);
             if($order->exists()){
-
-                if($req->token){
+                if($payToken){
+                    $update = $order->first();
+                    $update->payToken = $payToken;
+                    $update->update();
                     return view('user.payment',[
-                        'token' => $req->token
+                        'token' => $payToken
                     ]);
                 }
                 return redirect(route('home'));
@@ -92,45 +102,27 @@ class MarketController extends Controller
         }
     }
 
+    public function orders_history(){
+
+
+        $history = Order::where('user_id',Auth::id())
+        ->orderBy('created_at','DESC')
+        ->paginate(10);
+        $us = User::find(Auth::id());
+
+        $order = Order::firstWhere('transaksi_id','TRX-9168818877300');
+
+        Mail::to($us->email)->send(new CheckoutMail($order));
+        return view('user.history.order_history',compact('history'));
+    }
+
     public function user_settings()
     {
         if (Auth::check()) {
             return view('user.user-settings');
         } else {
-            return redirect('/login');
+            return redirect('/login')->with('pesan','Silahkan login dulu untuk mengakses');
         }
     }
 
-
-    // API CALLBACK
-    public function callback_mid(Request $req)
-    {
-
-        $server_key = config('midtrans.server_key');
-        $hashed = hash('sha512', $req->order_id . $req->status_code . $req->gross_amount . $server_key);
-        if ($hashed == $req->signature_key) {
-            $transaction = $req->transaction_status;
-            $type = $req->payment_type;
-            $order_id = $req->order_id;
-            $order = Order::where('transaksi_id', $req->order_id)->first();
-            if (($transaction == 'capture') || ($transaction == 'settlement')) {
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                $order->update([
-                    'status' => 'Paid',
-                    'tipe_pembayaran' => $type
-                ]);
-                return 'Success Updated';
-            } else {
-                $order->update([
-                    'status' => $transaction,
-                    'tipe_pembayaran' => $type
-                ]);
-                // TODO set payment status in merchant's database to 'Denied'
-                return "Payment using " . $type . " status $transaction";
-            }
-            Keranjang::where('user_id', Auth::id())->delete();
-        } else {
-            return 'Transaksi tidak ditemukan';
-        }
-    }
 }
