@@ -108,11 +108,6 @@ class MarketController extends Controller
         $history = Order::where('user_id',Auth::id())
         ->orderBy('created_at','DESC')
         ->paginate(10);
-        $us = User::find(Auth::id());
-
-        $order = Order::firstWhere('transaksi_id','TRX-9168818877300');
-
-        Mail::to($us->email)->send(new CheckoutMail($order));
         return view('user.history.order_history',compact('history'));
     }
 
