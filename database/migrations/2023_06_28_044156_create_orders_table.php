@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('total_harga');
             $table->string('tipe_pembayaran')->nullable();
             $table->string('payToken')->nullable();
-            $table->string('status',30);
+            $table->string('status_pembayaran',30);
+            $table->char('status_order',1)->nullable()->comment('1 = diproses, 2 = dikirim, 0 = selesai ');
             $table->timestamps();
         });
     }

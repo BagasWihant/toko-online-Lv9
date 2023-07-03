@@ -69,7 +69,7 @@
 }
 
 .colored-toast.swal2-icon-warning {
-  background-color: #FBCF33 !important;
+  background-color: #977700 !important;
 }
 
 .colored-toast.swal2-icon-info {
@@ -121,8 +121,11 @@
  .rotate{transform: rotate(90deg);}
 
 #list-nav-nyaa::-webkit-scrollbar{width:0!important}#list-nav-nyaa{overflow:-moz-scrollbars-none;list-style: none;}
+.img-card-sm{aspect-ratio: 4/3;object-fit: contain;mix-blend-mode: darken;height:10vw;}
+.img-card-lg{aspect-ratio: 4/3;object-fit: contain;mix-blend-mode: darken;}
 @media only screen and (min-width: 768px) {
-  .img-card{height: 15vw;object-fit: cover;}.img-card-xl{height: 25vw;object-fit: cover;}.img-card-sm{height: 10vw;object-fit: cover;}
+  .img-card{height: 15vw;object-fit: cover;}.img-card-xl{height: 25vw;object-fit: cover;}
+
 }.notify-badge-img-red{position: absolute;right:15px;
     top:15px;
     background:#ea0606;

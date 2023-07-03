@@ -8,29 +8,21 @@
                             <div class="carousel-inner">
                                 @foreach ($produk->productImage as $img)
                                     <div class="carousel-item @if ($loop->index == 0) active @else '' @endif">
-                                        <div class="page-header min-vh-50 m-3 border-radius-xl"
-                                            style="background-image: url('{{ asset($img->gambar) }}');">
-                                            {{-- <div class="container">
-                                                <div class="row">
-                                                    <div class="col-lg-6 my-auto">
-                                                        <h1 class="text-white fadeIn2 fadeInBottom">{{ $sld->title }}
-                                                        </h1>
-                                                        <p class="lead text-white opacity-8 fadeIn3 fadeInBottom">
-                                                            {{ $sld->deskripsi }}</p>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
-                                        </div>
+                                        <img src="{{ asset($img->gambar) }}" class="img-card-lg w-100">
                                     </div>
                                 @endforeach
                             </div>
                             <div class="min-vh-50 position-absolute w-100 top-0 bagashidemd">
-                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                                    <span class=" position-absolute bottom-50" aria-hidden="true"><i class="fas fa-arrow-circle-left text-danger"></i></span>
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                    data-bs-slide="prev">
+                                    <span class=" position-absolute bottom-50" aria-hidden="true"><i
+                                            class="fas fa-arrow-circle-left text-danger"></i></span>
                                     <span class="visually-hidden">Previous</span>
                                 </a>
-                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                                    <span class=" position-absolute bottom-50" aria-hidden="true"><i class="fas fa-arrow-circle-right text-danger"></i></span>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                    data-bs-slide="next">
+                                    <span class=" position-absolute bottom-50" aria-hidden="true"><i
+                                            class="fas fa-arrow-circle-right text-danger"></i></span>
                                     <span class="visually-hidden">Next</span>
                                 </a>
                             </div>
@@ -41,7 +33,9 @@
                             <span class="notify-badge-img-green">Stok Tersedia</span>
                         @elseif ($jumlahWarnaIni <= 10 && $jumlahWarnaIni > 0)
                             <span class="notify-badge-img-warning">Stok tinggal {{ $jumlahWarnaIni }}</span>
-                        @else
+                        @elseif ($jumlahWarnaIni == '-')
+                            <span class="notify-badge-img-red">Stok Habis</span>
+                        @elseif($jumlahWarnaIni === null)
                         @endif
                     </div>
                 </div>
@@ -70,17 +64,19 @@
                         </div>
                     </div>
                     <div class="">
-                        <h6 for="">Kuantitas</h6>
-                        <div class="input-group ">
-                            <button class="input-group-text" wire:click='minQty'>-</button>
-                            <input type="number" min="1" class="w-10"
-                                wire:model='qty'style="border: 1px solid #d2d6da;">
-                            <button class="input-group-text" wire:click='plusQty({{ $produk->jumlah }})'>+</button>
-                        </div>
-                        @if ($jumlahWarnaIni > 0)
-                            <label for="">Tersisa {{ $jumlahWarnaIni }}</label>
-                        @else
-                            <label for="">Tersisa {{ $produk->jumlah }}</label>
+                        @if ($jumlahWarnaIni !== '-')
+                            <h6 for="">Kuantitas</h6>
+                            <div class="input-group ">
+                                <button class="input-group-text" wire:click='minQty'>-</button>
+                                <input type="number" min="1" class="w-10"
+                                    wire:model='qty'style="border: 1px solid #d2d6da;">
+                                <button class="input-group-text" wire:click='plusQty({{ $produk->jumlah }})'>+</button>
+                            </div>
+                            @if ($jumlahWarnaIni > 0)
+                                <label for="">Tersisa {{ $jumlahWarnaIni }}</label>
+                            @else
+                                <label for="">Tersisa {{ $produk->jumlah }}</label>
+                            @endif
                         @endif
                     </div>
 

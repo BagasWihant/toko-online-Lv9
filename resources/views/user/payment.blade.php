@@ -21,7 +21,7 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/orders?status=success';
+                location.href = '{{ route("orders") }}';
 
 
             },
@@ -32,17 +32,17 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/orders?status=waiting';
+                location.href = '{{ route("orders") }}';
 
             },
             onError: function(result) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'pembayaran GAGAl',
+                    title: 'Pembayaran GAGAL',
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/orders?status=err';
+                location.href = '{{ route("orders") }}';
 
             },
             onClose: function() {
@@ -52,7 +52,7 @@
                     showConfirmButton: false,
                     timer: 2500
                 })
-                location.href = '/orders?status=failed';
+                location.href = '{{ route("orders") }}';
             }
         })
     })

@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-12">
 
-                            <button class="btn-sm btn btn-danger w-100 bg-gradient-danger"
+                            <button class="btn-sm btn btn-danger w-100 bg-gradient-danger m-0"
                                 wire:click='hapusWishlist({{ $p->id }})'><i
                                     class="fas fa-trash icon-button-sm mx-1"></i> Hapus Dari Wishlist</button>
                         </div>

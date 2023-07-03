@@ -213,8 +213,7 @@ class Index extends Component
                 'image.*' => 'image|max:7017',
             ]);
             foreach ($this->image as $key => $img) {
-
-                $image = $img->store('public/upload/produk/'); //path => storage/app/public
+                $image = $img->storePublicly('upload/produk', 'real_public');
                 $this->produk->productImage()->create([
                     'produk_id' => $this->produk->id,
                     'gambar' => $image,

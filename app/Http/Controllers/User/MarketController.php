@@ -72,7 +72,7 @@ class MarketController extends Controller
     {
         if (Auth::check()) {
             $keranjang = Keranjang::where('user_id', Auth::id());
-            if($keranjang->exists()){
+            if ($keranjang->exists()) {
                 return view('user.checkout');
             }
             return redirect(route('keranjang'));
@@ -81,16 +81,16 @@ class MarketController extends Controller
         }
     }
 
-    public function payment($payToken,$trx){
+    public function payment($payToken, $trx)
+    {
         if (Auth::check()) {
-
             $order = Order::where('transaksi_id', $trx);
-            if($order->exists()){
-                if($payToken){
+            if ($order->exists()) {
+                if ($payToken) {
                     $update = $order->first();
                     $update->payToken = $payToken;
                     $update->update();
-                    return view('user.payment',[
+                    return view('user.payment', [
                         'token' => $payToken
                     ]);
                 }
@@ -102,13 +102,16 @@ class MarketController extends Controller
         }
     }
 
-    public function orders_history(){
-
-
-        $history = Order::where('user_id',Auth::id())
-        ->orderBy('created_at','DESC')
-        ->paginate(10);
-        return view('user.history.order_history',compact('history'));
+    public function orders_history()
+    {
+        if (Auth::check()) {
+            $history = Order::where('user_id', Auth::id())
+                ->orderBy('created_at', 'DESC')
+                ->paginate(10);
+            return view('user.history.order_history', compact('history'));
+        } else {
+            return redirect('/login');
+        }
     }
 
     public function user_settings()
@@ -116,8 +119,7 @@ class MarketController extends Controller
         if (Auth::check()) {
             return view('user.user-settings');
         } else {
-            return redirect('/login')->with('pesan','Silahkan login dulu untuk mengakses');
+            return redirect('/login')->with('pesan', 'Silahkan login dulu untuk mengakses');
         }
     }
-
 }

@@ -74,15 +74,14 @@
 
         <div class="position-fixed tombol-ngambang">
             <div class="card shadow-lg flex">
-                <div class="card-body text-center py-2 align-item-center">
+                <div class="card-body text-center p-3 align-item-center">
                     <span class="font-weight-bolder">Total Pesanan:
                         <span class="text-primary">
                             {{ number_format($totalHarga) }}
                         </span>
                     </span>
-                    <a href="{{ route('checkout') }}"
-                        class="font-weight-bolder btn-success bg-gradient-success rounded-3">
-
+                    <a wire:click='checkout'
+                        class="font-weight-bolder btn-success bg-gradient-success rounded-3 p-2 m-0 btn">
                         Checkout
                     </a>
 

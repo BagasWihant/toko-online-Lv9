@@ -6,6 +6,8 @@ use App\Models\Order;
 use Livewire\Component;
 use App\Models\Keranjang;
 use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Models\ProdukWarna;
 use App\Models\UserDetail;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,7 +54,7 @@ class Checkout extends Component
             'address' => $user->fulltext_alamat,
             'qty' => $this->newKeranjang['qty'],
             'total_harga' => $this->newKeranjang['total'],
-            'status' => 'Unpaid',
+            'status_pembayaran' => 'Unpaid',
         ]);
 
 
@@ -64,6 +66,13 @@ class Checkout extends Component
                 'qty' => $orderDetail->quantity,
                 'produk_warna_id' => $orderDetail->produk_warna_id,
             ]);
+            $produk = Product::find($orderDetail->produk_id);
+            $produk->jumlah = $produk->jumlah - $orderDetail->quantity;
+            $produk->update();
+
+            $warna = ProdukWarna::find($orderDetail->produk_warna_id);
+            $warna->qty = $warna->qty - $orderDetail->quantity;
+            $warna->update();
         }
         $keranjang->delete();
 

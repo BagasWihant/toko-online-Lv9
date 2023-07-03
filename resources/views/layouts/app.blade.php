@@ -73,23 +73,23 @@
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown bagashidemd">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bolder text-uppercase" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
+                                        <i class="fas fa-user mx-2"></i> {{ Auth::user()->name }}
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
                                         <a class="dropdown-item" href="{{ route('orders') }}">
-                                            History Pembelian
+                                            <i class="fas fa-clipboard-list mx-2"></i> Pesanan Saya
                                          </a>
                                         <a class="dropdown-item" href="{{ route('user-settings') }}">
-                                            Setting
+                                            <i class="fas fa-user-cog mx-2"></i>Setting
                                          </a>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                           <i class="fas fa-sign-out-alt mx-2"></i> {{ __('Logout') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -155,23 +155,25 @@
                             </a></div>
 
                         <div class="item"><a class="nav-link d-block" href="{{ route('wishlist') }}">
-                                <i class="fas fa-shopping-cart"></i>Wishlist
+                                <i class="fas fa-heart"></i>Wishlist
                                 <span class="ct-docs-sidenav-pro-badge bg-primary text-white">@livewire('user.wishlist-count')</span>
+                            </a></div>
+                        <div class="item"><a class="nav-link d-block" href="{{ route('orders') }}">
+                            <i class="fas fa-clipboard-list"></i>Pesanan Saya
+                                {{-- <span class="ct-docs-sidenav-pro-badge bg-primary text-white"></span> --}}
                             </a></div>
 
                         <div class="item">
-                            <a class="sub-btn"><i class="fas fa-table"></i> {{ Auth::user()->name }}<i
+                            <a class="sub-btn font-weight-bolder text-uppercase"><i class="fas fa-user"></i> {{ Auth::user()->name }}<i
                                     class="fas fa-angle-right dropdown"></i></a>
                             <div class="sub-menu border-radius-xl ">
 
-                                <a  href="{{ route('orders') }}">
-                                    Histori Pembelian
-                                 </a>
                                 <a  href="{{ route('user-settings') }}">
-                                    Setting
+                                    <i class="fas fa-user-cog"></i>Setting
                                  </a>
                                 <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit(); "class="sub-item">{{ __('Logout') }}</a>
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit(); "
+                                    class="sub-item text-danger"><i class="fas fa-sign-out-alt"></i>{{ __('Logout') }}</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>

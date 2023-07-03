@@ -3,104 +3,50 @@
 @section('nav-menu') @include('layouts.nav-menu') @endsection
 
 @section('content')
+<div class="container-fluid">
+    @forelse ($history as $d)
+        <div class="card my-3">
+            <div class="d-flex justify-content-between mx-3 my-1">
+                <h6 class="">{{ $d->transaksi_id }}</h6>
+                <h6 class="">{{ $d->status_pembayaran }}</h6>
+            </div>
+            <hr class="m-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-start mb-2">
+                    <img class="w-20 border-radius-md img-card-sm "
+                    src="{{ asset($d->orderDetail->first()->produk->productImage[0]->gambar) }}">
+                    <div class="">
+                        <h6 class="mx-3">{{ $d->orderDetail->first()->produk->name }}</h6>
+                        <span class="mx-3">{{ $d->orderDetail->first()->qty }} barang</span>
+                    </div>
+                </div>
 
-    <div class="card">
-        <div class="table-responsive">
-            <table class="table align-items-center mb-0">
-                <thead>
-                    <tr>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Nama Produk</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Harga</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jumlah</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Status</th>
-                        {{-- <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Gambar</th> --}}
-                        {{-- <th
-                        class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2 text-center">
-                        AKsi</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($history as $d)
-                        <tr>
-                            <td>
-                                <div class="d-flex px-2">
-                                    <div class="my-auto">
-                                        {{ $d->id }}
-                                        @foreach ($d->orderDetail as $detail)
-                                            <h6 class="mb-0 text-sm">{{ $detail->produk->name }}</h6>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="px-2">
-                                    <div class="my-auto">
-                                        <h6 class="mb-0 text-sm">{{ $d->total_harga }}</h6>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="px-2">
-                                    <div class="my-auto">
-                                        <h6 class="mb-0 text-sm">{{ $d->qty }}</h6>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="px-2">
-                                    <div class="my-auto">
-                                        @if ($d->status == 'Paid')
-                                        @else
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <h6 class="mb-0 text-sm">{{ $d->status }}
-                                                    </h6>
-                                                </div>
-                                                <div class="col-6">
+                @if(count($d->orderDetail) > 1)
+                <div class="w-100 border d-flex justify-content-center mb-2">
+                    <span class="">+{{ count($d->orderDetail)-1 }} produk lainnya</span>
+                </div>
+                @endif
 
-                                                    <a href="{{ route('payment',['trx'=>$d->transaksi_id, 'payToken' => $d->payToken ? $d->payToken : 'null']) }}"
-                                                        class="btn btn-sm bg-gradient btn-success">bayar</a>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            </td>
-                            {{-- <td>
-                            <a wire:click="getID({{ $d->id }})" type="button" data-bs-toggle="modal"
-                                data-bs-target="#modalProduk" class="btn btn-link text-warning text-gradient">
-                                <span class="btn-inner--icon"><i class="fas fa-edit me-2"></i>edit</span>
-                            </a>
-                            <button wire:click="getID({{ $d->id }})"
-                                class="btn btn-link text-danger text-gradient " type="button"
-                                data-bs-toggle="modal" data-bs-target="#hapusKategori">
-
-                                <span class="btn-inner--icon"><i class="fas fa-trash me-2"></i>delete</span>
-                            </button>
-                            @if ($d->status == '1')
-                                <button wire:click="hide({{ $d->id }})"
-                                    class="btn btn-link text-success text-gradient" type="button">
-                                    <span class="btn-inner--icon"><i class="fas fa-eye me-2"></i>tampilkan<i
-                                            wire:target="hide({{ $d->id }})" wire:loading
-                                            class="fas fa-spinner fa-spin"></i></span>
-                                </button>
-                            @else
-                                <button wire:click="show({{ $d->id }})"
-                                    class="btn btn-link text-primary text-gradient" type="button">
-                                    <span class="btn-inner--icon"><i class="fas fa-eye-slash"></i>sembunyikan<i
-                                            wire:target="show({{ $d->id }})" wire:loading
-                                            class="fas fa-spinner fa-spin"></i></span>
-                                </button>
-                            @endif
-                        </td> --}}
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <h6 class="m-0">Total Belanja</h6>
+                        <span>Rp. {{ number_format($d->total_harga) }}</span>
+                    </div>
+                    <div class="">
+                        @if($d->status_pembayaran != 'Paid')
+                        <a href="{{ route('payment', ['trx' => $d->transaksi_id, 'payToken' => $d->payToken ? $d->payToken : 'null']) }}" class="btn btn-success bg-gradient btn-sm">Bayar </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div>
+                {{ $history->links('layouts/pagination-not-livewire') }}
+            </div>
         </div>
-        <div>
-            {{ $history->links('layouts/pagination-not-livewire') }}
+    @empty
+        <div class="col-md-12 text-center my-8">
+            <span class="text-primary h3 text-gradient text-uppercase">Belum Ada transaksi</span>
         </div>
-    </div>
+    @endforelse
+</div>
 @endsection

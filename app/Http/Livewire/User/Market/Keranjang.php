@@ -48,15 +48,13 @@ class Keranjang extends Component
         $this->emit('masukKeranjang');
     }
 
-    public function checkout($totalHarga, $qty)
+    public function checkout()
     {
         // CEK ALAMAT ADA TIDAK
         $user = UserDetail::where('user_id', Auth::id());
-        if($user->exists()){
-            $user = $user->first();
-        }else{
+        if(!$user->exists()){
             $this->alert('warning', 'Perhatian!!!', [
-                'text' => 'Mohon Isi Alamat dan Nomor telepon dulu yaa..',
+                'text' => 'Mohon Isi Alamat di dulu yaa..',
                 'position' => 'center',
                 'timer' => 3000,
                 'toast' => false,
@@ -65,42 +63,7 @@ class Keranjang extends Component
             return false;
         }
 
-        $_id = 'TRX-' . Auth::id() . strtotime(date('Y-m-d H:i:s'));
-        $transaksi_id = str_pad($_id, 17, '0');
-        $order = Order::create([
-            'transaksi_id' => $transaksi_id,
-            'user_id' => Auth::id(),
-            'address' => $user->fulltext_alamat,
-            'qty' => $qty,
-            'total_harga' => $totalHarga,
-            'status' => 'Unpaid',
-        ]);
-
-
-        // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = config('midtrans.server_key');
-        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = false;
-        // Set sanitization on (default)
-        \Midtrans\Config::$isSanitized = true;
-        // Set 3DS transaction for credit card to true
-        \Midtrans\Config::$is3ds = true;
-
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => $transaksi_id,
-                'gross_amount' => $totalHarga,
-            ),
-            'customer_details' => array(
-                'first_name' => $user->nama_lengkap,
-                'email' => $user->user->email,
-                'phone' => $user->no_telp,
-            ),
-        );
-
-        $this->snapToken = \Midtrans\Snap::getSnapToken($params);
-        // return $this->snapToken;
-        $this->dispatchBrowserEvent('midtrans__token');
+        return redirect()->route('checkout');
     }
 
 

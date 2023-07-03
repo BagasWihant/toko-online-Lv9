@@ -82,10 +82,10 @@
                                     placeholder="Alamat Lengkap"></textarea>
                             </div>
                         </div>
-                        <input type="hidden" name='prov_text' id="prov_text">
-                        <input type="hidden" name='kab_text' id="kab_text">
-                        <input type="hidden" name='kec_text' id="kec_text">
-                        <input type="hidden" name='kel_text' id="kel_text">
+                        <input type="text" class="d-none" name='prov_text' id="prov_text">
+                        <input type="text" class="d-none" name='kab_text' id="kab_text">
+                        <input type="text" class="d-none" name='kec_text' id="kec_text">
+                        <input type="text" class="d-none" name='kel_text' id="kel_text">
 
                         <div class="text-center">
                             <button class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">
@@ -94,6 +94,9 @@
                         </div>
                     </div>
                 </form>
+
+                {{--  close card --}}
+            </div>
                 <button wire:click='kembali' class="btn btn-round bg-gradient-danger btn-lg w-100 mt-4 mb-0">
                     batalkan perubahan
                 </button>
@@ -190,6 +193,9 @@
                         </div>
                     </div>
                 </form>
+
+                {{--  close card --}}
+                </div>
                 <button wire:click='kembali' class="btn btn-round bg-gradient-danger btn-lg w-100 mt-4 mb-0">
                     batalkan perubahan
                 </button>

@@ -40,7 +40,12 @@
         </div>
     </div>
     <button wire:click='buat_pesanan' class="btn btn-round bg-gradient-success btn-lg w-100 mt-4 mb-0">
-        Buat pesanan
+        <div wire:loading.remove wire:target='buat_pesanan'>
+            Buat pesanan
+        </div>
+        <div wire:loading wire:target='buat_pesanan'>
+            Sedang Memproses...
+        </div>
     </button>
 
 </div>

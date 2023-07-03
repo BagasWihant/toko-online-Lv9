@@ -13,7 +13,7 @@ class ProdukDetail extends Component
 {
     use LivewireAlert;
     public $produk, $kategori, $warnaId = null;
-    public $pilihanWarna = 0, $jumlahWarnaIni;
+    public $pilihanWarna = 0, $jumlahWarnaIni = null;
     public $qty = 1;
     public function render()
     {
@@ -23,7 +23,7 @@ class ProdukDetail extends Component
     public function pilihWarna($id)
     {
         $warna = ProdukWarna::where('id', $id)->first();
-        $this->jumlahWarnaIni = $warna->qty;
+        $this->jumlahWarnaIni = $warna->qty > 1 ? $warna->qty : '-';
         $this->warnaId = $id;
     }
 
