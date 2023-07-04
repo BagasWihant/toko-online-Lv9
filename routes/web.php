@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\User\MarketController;
 use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\User\MarketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +39,8 @@ Route::controller(MarketController::class)->group(function () {
     });
 
 });
-Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
 
 // admin
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
@@ -55,5 +55,7 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('product', 'index')->name('product');
     });
 
-    Route::get('slider', [SliderController::class, 'index'])->name('slider');
+    Route::get('slider', [SliderController::class, 'index'])->name('admin-slider');
+
+    Route::get('orders', [OrderController::class, 'index'])->name('admin-order');
 });

@@ -21,7 +21,7 @@ class Index extends Component
 
     public $errorValidasi = '',$produk_id, $name, $brand, $slug, $status, $deskripsi, $image = [], $oldImage = null, $kategori_id,
         $kondisiModal = 'tambah', $produk, $trending, $harga_jual, $jumlah, $warna = [];
-    public $iteration = 0, $totalWarna = 1, $color, $qty; // untuk id upload ben bar upload ke reset
+    public $iteration = 0, $totalWarna = 1, $color,$colorID, $qty; // untuk id upload ben bar upload ke reset
 
     // image
     public $productWarna;
@@ -64,6 +64,7 @@ class Index extends Component
         $this->warna = [];
         $this->productWarna = null;
         $this->color = [];
+        $this->colorID = [];
         $this->qty = [];
     }
 
@@ -93,11 +94,12 @@ class Index extends Component
         $this->jumlah = $this->produk->jumlah;
         $img = $this->produk->productImage;
         $this->oldImage = $img;
-        $productWarna = $this->produk->productWarna;
-        $this->productWarna = $productWarna;
-        foreach ($productWarna as $k => $v) {
+
+        $this->productWarna = $this->produk->productWarna;
+        foreach ($this->productWarna as $k => $v) {
             $this->qty[$k] = $v->qty;
             $this->color[$k] = $v->warna;
+            $this->colorID[$k] = $v->id;
         }
     }
 
@@ -114,6 +116,7 @@ class Index extends Component
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorValidasi = $e->getMessage();
         }
+
         $category = Category::findOrFail($this->kategori_id);
         $product = $category->product()->create([
             'name' => $this->name,
@@ -186,18 +189,36 @@ class Index extends Component
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorValidasi = $e->getMessage();
         }
-        $warna = ProdukWarna::where('produk_id', $this->produk_id);
-        $warna->delete();
+
+
         $jumlahTotal = 0;
         $produk = Product::where('id', $this->produk_id)->first();
         foreach ($this->color as $k => $v) {
-            $produk->productWarna()->create([
-                'produk_id' => $this->produk_id,
-                'warna' => $this->color[$k],
-                'qty' => $this->qty[$k],
-            ]);
+
+            if(!isset($this->colorID[$k])){
+                $this->colorID[$k] = 00; //
+            }
+
+            $cekWarna = ProdukWarna::where('id',$this->colorID[$k]);
+            if($cekWarna->exists()){
+                $cekWarna =$cekWarna->first();
+                // jika ada update jumlah saja
+                $cekWarna->warna = $this->color[$k];
+                $cekWarna->qty = $this->qty[$k];
+                $cekWarna->update();
+
+            }else{
+                $produk->productWarna()->create([
+                    'produk_id' => $this->produk_id,
+                    'warna' => $this->color[$k],
+                    'qty' => $this->qty[$k],
+                ]);
+            }
+
             $jumlahTotal = $jumlahTotal + $this->qty[$k];
         }
+
+
         $this->produk->name = $this->name;
         $this->produk->kategori_id = $this->kategori_id;
         $this->produk->brand = $this->brand;
@@ -234,6 +255,7 @@ class Index extends Component
         $this->produk->update();
         $this->clear();
     }
+
     public function hide($id)
     {
         $this->getID($id);
@@ -248,8 +270,19 @@ class Index extends Component
         $this->totalWarna = $totalWarna;
 
         array_push($this->warna, $totalWarna);
-        // dd($this->warna);
+    }
 
+    public function hapusWarna($id){
+        // SET KOSONG ARRAY
+        $this->qty = $this->color = $this->colorID =[];
+
+        ProdukWarna::find($id)->delete();
+        $this->productWarna = ProdukWarna::where('produk_id',$this->produk_id)->get();
+        foreach ($this->productWarna as $k => $v) {
+            $this->qty[$k] = $v->qty;
+            $this->color[$k] = $v->warna;
+            $this->colorID[$k] = $v->id;
+        }
     }
 
     public function render()

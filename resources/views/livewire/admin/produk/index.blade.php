@@ -244,23 +244,29 @@
                                     <div wire:ignore.self class="tab-pane fade text-center" id="nav-warna"
                                         role="tabpanel" aria-labelledby="nav-warna-tab">
                                         @if($productWarna)
-                                        @foreach ($productWarna as $index=>$value)
-                                            <div class="row">
-                                                <div class="col-7">
-                                                    <label>Warna / Tipe</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" wire:model="color.{{ $index }}">
+                                            @foreach ($productWarna as $index=>$value)
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <label>Warna / Tipe</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" wire:model="color.{{ $index }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <label for="">Jumlah</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" required
+                                                                wire:model="qty.{{ $index }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <a wire:click='hapusWarna({{ $value->id }})'
+                                                            class="btn btn-danger p-2 mt-4">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="col-5">
-                                                    <label for="">Jumlah</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" required
-                                                            wire:model="qty.{{ $index }}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
                                         @endif
                                         @foreach ($warna as $key => $value)
                                             <div class="row">

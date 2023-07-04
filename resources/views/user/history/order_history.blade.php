@@ -39,14 +39,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+        @empty
+            <div class="col-md-12 text-center my-8">
+                <span class="text-primary h3 text-gradient text-uppercase">Belum Ada transaksi</span>
+            </div>
+        @endforelse
             <div>
                 {{ $history->links('layouts/pagination-not-livewire') }}
             </div>
-        </div>
-    @empty
-        <div class="col-md-12 text-center my-8">
-            <span class="text-primary h3 text-gradient text-uppercase">Belum Ada transaksi</span>
-        </div>
-    @endforelse
 </div>
 @endsection
