@@ -112,14 +112,14 @@
                 </div>
             </div>
     </div>
-@empty
-    <div class="col-md-12 text-center my-5">
-        <span class="text-primary h4 text-gradient">Produk Belum Ada</span>
-    </div>
+    @empty
+        <div class="col-md-12 text-center my-5">
+            <span class="text-primary h4 text-gradient">Produk Belum Ada</span>
+        </div>
     @endforelse
 </div>
-<div class="fixed-plugin1">
-    <div class="card shadow-lg ">
+<div class="fixed-plugin1" wire:ignore.self>
+    <div class="card shadow-lg " >
         <div class="card-header pb-0 pt-3 ">
             <div class="float-start">
                 <h5 class="mt-3 mb-0">Filter Produk</h5>
@@ -132,26 +132,28 @@
             <!-- End Toggle Button -->
         </div>
         <hr class="horizontal dark my-1">
-        <div class="card-body pt-sm-3 pt-0  navbar-vertical">
+        <div class="card-body pt-sm-3 pt-0  navbar-vertical" >
             <!-- Sidebar Backgrounds -->
 
             <div class="menu">
                 <div class="item"><a class="nav-link d-block">
                         <div class="row">
                             <div class="col-6">
-                                <input type="number" class="form-control" id="floatingInput"
+                                <input type="number" class="form-control" id="floatingInput" wire:model='findMinHarga'
                                     placeholder="Min. Harga">
                             </div>
                             <div class="col-6">
-                                <input type="number" class="form-control" id="floatingInput1"
+                                <input type="number" class="form-control" id="floatingInput1" wire:model='findMaxHarga'
                                     placeholder="Max. Harga">
                             </div>
                         </div>
                 </div>
 
-                <div class="item"><a class="nav-link d-block">
-                        <i class="fas fa-shopping-cart"></i>Wishlist
-                        <span class="ct-docs-sidenav-pro-badge">4</span>
+                <div class="item">
+                    <button wire:click='searching'
+                    class="btn btn-succes bg-gradient-success d-block w-100">
+                        <i class="fas fa-shopping-cart"></i>Cari
+                    </button>
                 </div>
 
             </div>

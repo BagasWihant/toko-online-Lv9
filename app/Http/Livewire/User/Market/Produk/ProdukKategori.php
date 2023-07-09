@@ -15,6 +15,12 @@ class ProdukKategori extends Component
     use LivewireAlert;
     public $produk, $kategori, $keranjang = [], $jumlahWarnaIni = 0, $kondisi = null, $produkID;
     public $name, $qty = 1, $warnaid, $productWarna = [];
+    public $findMinHarga, $findMaxHarga;
+
+    protected $queryString = [
+        'findMinHarga' => ['except' => '', 'as' => 'min'],
+         'findMaxHarga' => ['except' => '', 'as' => 'max']];
+
     public function mount($produk, $kategori)
     {
         $this->produk = $produk;
@@ -24,9 +30,10 @@ class ProdukKategori extends Component
     {
         $warna = ProdukWarna::where('id', $id)->first();
         $this->jumlahWarnaIni = $warna->qty;
-        $this->qty =1;
+        $this->qty = 1;
         $this->warnaid = $id;
     }
+
     public function plusQty($jml)
     {
         if ($this->jumlahWarnaIni > 0) {
@@ -43,6 +50,7 @@ class ProdukKategori extends Component
         }
         $this->qty++;
     }
+
     public function minQty()
     {
         if ($this->qty <= 1) {
@@ -51,6 +59,7 @@ class ProdukKategori extends Component
         }
         $this->qty--;
     }
+
     public function clearForm()
     {
 
@@ -60,6 +69,7 @@ class ProdukKategori extends Component
         $this->name = '';
         $this->productWarna = [];
     }
+
     public function getData($id)
     {
         $this->kondisi = 'modal';
@@ -120,38 +130,36 @@ class ProdukKategori extends Component
                 // dd(Keranjang::where('user_id', Auth::id())->where('produk_id', $id)->where('produk_warna_id', $this->warnaid)->toSql());
 
                 if (!Keranjang::where('user_id', Auth::id())->where('produk_id', $id)->where('produk_warna_id', $this->warnaid)->exists()) {
-                    if($this->qty <=  $this->jumlahWarnaIni){
-                    Keranjang::create([
-                        'user_id' => Auth::id(),
-                        'produk_id' => $id,
-                        'produk_warna_id' => $this->warnaid,
-                        'quantity' => $this->qty
-                    ]);
-                    $this->emit('masukKeranjang');
-                    $this->dispatchBrowserEvent('modal-hide');
+                    if ($this->qty <=  $this->jumlahWarnaIni) {
+                        Keranjang::create([
+                            'user_id' => Auth::id(),
+                            'produk_id' => $id,
+                            'produk_warna_id' => $this->warnaid,
+                            'quantity' => $this->qty
+                        ]);
+                        $this->emit('masukKeranjang');
+                        $this->dispatchBrowserEvent('modal-hide');
 
-                    $this->alert('success', 'Produk masuk Keranjang', [
-                        'position' => 'center',
-                        'timer' => 2000,
-                        'toast' => true,
-                        'timerProgressBar' => true,
-                        'customClass' => [
-                            'popup' => 'colored-toast'
-                        ]
-                    ]);
-
-
-                }else{
-                    $this->alert('error', 'Stok untuk produk jenis ini tinggal '.$this->jumlahWarnaIni, [
-                        'position' => 'center',
-                        'timer' => 2000,
-                        'toast' => true,
-                        'timerProgressBar' => true,
-                        'customClass' => [
-                            'popup' => 'colored-toast'
-                        ]
-                    ]);
-                }
+                        $this->alert('success', 'Produk masuk Keranjang', [
+                            'position' => 'center',
+                            'timer' => 2000,
+                            'toast' => true,
+                            'timerProgressBar' => true,
+                            'customClass' => [
+                                'popup' => 'colored-toast'
+                            ]
+                        ]);
+                    } else {
+                        $this->alert('error', 'Stok untuk produk jenis ini tinggal ' . $this->jumlahWarnaIni, [
+                            'position' => 'center',
+                            'timer' => 2000,
+                            'toast' => true,
+                            'timerProgressBar' => true,
+                            'customClass' => [
+                                'popup' => 'colored-toast'
+                            ]
+                        ]);
+                    }
                 } else {
                     // update qty
                     $this->alert('warning', 'Update jumlah di keranjang', [
@@ -186,6 +194,19 @@ class ProdukKategori extends Component
                 ]
             ]);
         }
+    }
+
+
+    public function searching()
+    {
+
+        $this->produk = Product::when($this->findMinHarga, function ($q) {
+            $q->where('harga_jual', '>=', $this->findMinHarga);
+        })->when($this->findMaxHarga, function($q){
+                $q->where('harga_jual', '<=', $this->findMaxHarga);
+
+        })
+        ->get();
     }
 
 
