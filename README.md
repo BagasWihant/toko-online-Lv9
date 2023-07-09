@@ -12,6 +12,9 @@
 - Livewire
 - Bootsrap 5
 - MySql
+- payment Midtrans
+
+
 
 
 
