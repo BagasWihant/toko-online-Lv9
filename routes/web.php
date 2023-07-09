@@ -36,6 +36,7 @@ Route::controller(MarketController::class)->group(function () {
     Route::get('/payment/{payToken}/{trx}', 'payment')->name('payment');
     Route::prefix('/orders')->group(function () {
         Route::get('/', 'orders_history')->name('orders');
+        Route::get('/tr', 'terima_barang')->name('terima_barang');
     });
 
 });

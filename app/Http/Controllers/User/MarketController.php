@@ -6,13 +6,10 @@ use App\Models\Order;
 use App\Models\Slider;
 use App\Models\Category;
 use App\Models\Keranjang;
-use App\Mail\CheckoutMail;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class MarketController extends Controller
 {
@@ -100,6 +97,13 @@ class MarketController extends Controller
         } else {
             return redirect('/login');
         }
+    }
+    public function terima_barang(Request $id)
+    {
+        $order = Order::find($id)->first();
+        $order->status_order = 0;
+        $order->save();
+        return redirect()->back();
     }
 
     public function orders_history()

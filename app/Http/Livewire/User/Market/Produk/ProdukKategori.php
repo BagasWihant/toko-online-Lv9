@@ -29,8 +29,7 @@ class ProdukKategori extends Component
     public function pilihWarna($id)
     {
         $warna = ProdukWarna::where('id', $id)->first();
-        $this->jumlahWarnaIni = $warna->qty;
-        $this->qty = 1;
+        $this->jumlahWarnaIni = $warna->qty > 1 ? $warna->qty : '-';
         $this->warnaid = $id;
     }
 

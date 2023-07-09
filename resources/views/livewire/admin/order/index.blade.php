@@ -53,11 +53,9 @@
             {{ $data->links('layouts/pagination') }}
         </div>
     @else
-    {{-- MODE DETAIL --}}
+        {{-- MODE DETAIL --}}
         <div class="">
-            <button
-                wire:click='kembaliSemula'
-                class="btn btn-primary bg-gradient-primary p-2 ">
+            <button wire:click='kembaliSemula' class="btn btn-primary bg-gradient-primary p-2 ">
                 <i class="fas fa-chevron-left font-weight-bolder"></i>
                 kembali
             </button>
@@ -102,17 +100,18 @@
             <hr class="m-0">
             <div class="card-body">
                 @foreach ($dataOrder->orderDetail as $orderDetail)
-
-                <div class="d-flex justify-content-start py-3">
-                    <img class="w-20 border-radius-md img-card-sm "
-                    src="{{ asset($orderDetail->produk->productImage[0]->gambar) }}">
-                    <div class="d-flex flex-column">
-                        <span class="mx-3 h6">{{ $orderDetail->produk->name }}</span>
-                        <span class="mx-3">Warna/Jenis : {{ $orderDetail->produkWarna ? $orderDetail->produkWarna->warna : 'null' }}</span>
-                        <span class="mx-3">{{ $orderDetail->qty }} barang</span>
-                        <span class="mx-3">Rp. {{ number_format($orderDetail->produk->harga_jual * $orderDetail->qty) }}</span>
+                    <div class="d-flex justify-content-start py-3">
+                        <img class="w-20 border-radius-md img-card-sm "
+                            src="{{ asset($orderDetail->produk->productImage[0]->gambar) }}">
+                        <div class="d-flex flex-column">
+                            <span class="mx-3 h6">{{ $orderDetail->produk->name }}</span>
+                            <span class="mx-3">Warna/Jenis :
+                                {{ $orderDetail->produkWarna ? $orderDetail->produkWarna->warna : 'null' }}</span>
+                            <span class="mx-3">{{ $orderDetail->qty }} barang</span>
+                            <span class="mx-3">Rp.
+                                {{ number_format($orderDetail->produk->harga_jual * $orderDetail->qty) }}</span>
+                        </div>
                     </div>
-                </div>
                 @endforeach
 
                 <div class="d-flex justify-content-between">
@@ -124,9 +123,25 @@
             </div>
         </div>
 
-        @if($dataOrder->status_pembayaran == 'Paid')
+        @if ($dataOrder->status_pembayaran == 'Paid' && $dataOrder->status_order == null)
             <div class="card my-4">
-                <button class="btn btn-success bg-gradient-success h5 m-0">setujui dan proses </button>
+                <button wire:click='proses({{ $dataOrder->id }})'
+                    class="btn btn-primary bg-gradient-primary h5 m-0">setujui dan proses </button>
+            </div>
+        @elseif($dataOrder->status_pembayaran == 'Paid' && $dataOrder->status_order == 1)
+            <div class="card my-4">
+                <button wire:click='kirim({{ $dataOrder->id }})'
+                    class="btn btn-success bg-gradient-success h5 m-0">Kirim ke pembeli </button>
+            </div>
+        @elseif($dataOrder->status_pembayaran == 'Paid' && $dataOrder->status_order == 2)
+            <div class="card my-4">
+                <button
+                    class="btn btn-secondary disable bg-gradient-secondary h5 m-0">Sedang dikirim </button>
+            </div>
+        @elseif($dataOrder->status_pembayaran == 'Paid' && $dataOrder->status_order == 0)
+            <div class="card my-4">
+                <button
+                    class="btn btn-secondary disable bg-gradient-secondary h5 m-0">Transaksi Selesai </button>
             </div>
         @endif
     @endif

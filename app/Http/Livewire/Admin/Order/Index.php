@@ -20,6 +20,20 @@ class Index extends Component
         $this->dataOrder = Order::find($id);
     }
 
+    public function proses($id){
+        $order = Order::find($id);
+        $order->status_order = 1;
+        $order->update();
+        $this->statusPage = '-';
+    }
+
+    public function kirim($id){
+        $order = Order::find($id);
+        $order->status_order = 2;
+        $order->update();
+        $this->statusPage = '-';
+    }
+
     public function render()
     {
         $data = Order::orderBy('created_at','DESC')->paginate(10);

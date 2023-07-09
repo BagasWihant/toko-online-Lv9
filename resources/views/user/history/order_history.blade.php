@@ -8,7 +8,15 @@
         <div class="card my-3">
             <div class="d-flex justify-content-between mx-3 my-1">
                 <h6 class="">{{ $d->transaksi_id }}</h6>
+                @if ($d->status_pembayaran == 'Paid')
+                    @if ($d->status_order == 2)
+                        <h6 class="">Barang Dikirim</h6>
+                    @else
+                        <h6 class="">{{ $d->status_pembayaran }}</h6>
+                    @endif
+                @else
                 <h6 class="">{{ $d->status_pembayaran }}</h6>
+                @endif
             </div>
             <hr class="m-0">
             <div class="card-body">
@@ -34,7 +42,10 @@
                     </div>
                     <div class="">
                         @if($d->status_pembayaran != 'Paid')
-                        <a href="{{ route('payment', ['trx' => $d->transaksi_id, 'payToken' => $d->payToken ? $d->payToken : 'null']) }}" class="btn btn-success bg-gradient btn-sm">Bayar </a>
+                            <a href="{{ route('payment', ['trx' => $d->transaksi_id, 'payToken' => $d->payToken ? $d->payToken : 'null']) }}" class="btn btn-success bg-gradient btn-sm">Bayar </a>
+                        @endif
+                        @if ($d->status_order == 2 && $d->status_pembayaran == 'Paid')
+                            <a href="{{ route('terima_barang',['id' => $d->id]) }}" class="btn btn-primary bg-gradient-primary btn-sm">Terima Barang </a>
                         @endif
                     </div>
                 </div>
