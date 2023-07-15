@@ -7,6 +7,7 @@ use App\Http\Controllers\User\MarketController;
 use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::controller(MarketController::class)->group(function () {
 });
 
 Auth::routes();
+Route::get('/login-with-google',[LoginController::class, 'loginGoogle'])->name('login-with-google');
+Route::match(['get', 'post'],'/auth/google/callback',[LoginController::class, 'loginGoogleCallback'])->name('login-google-callback');
 
 // admin
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
